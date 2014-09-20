@@ -1,5 +1,5 @@
 package eu.veldsoft.cruce;
 
-class main {
+public class WINDOW {
 
 }
