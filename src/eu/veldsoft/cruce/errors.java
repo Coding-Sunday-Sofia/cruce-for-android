@@ -12,15 +12,21 @@ class errors {
 
 		private int index;
 
+		/**
+		 */
 		ERROR_CODE(int index) {
 			this.index = index;
 		}
 
+		/**
+		 */
 		public int getIndex() {
 			return index;
 		}
 	}
 
+	/**
+	 */
 	final String error(final int error_code) {
 		return ("");
 	}

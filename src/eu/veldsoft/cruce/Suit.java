@@ -5,10 +5,14 @@ enum Suit {
 
 	private int index;
 
+	/**
+	 */
 	Suit(int index) {
 		this.index = index;
 	}
 
+	/**
+	 */
 	public int getIndex() {
 		return index;
 	}

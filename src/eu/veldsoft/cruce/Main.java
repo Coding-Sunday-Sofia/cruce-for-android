@@ -5,13 +5,19 @@ class Main {
 
 	final String GAME_HELP_MANUAL = "";
 
+	/**
+	 */
 	void cruceGameHelp() {
 	}
 
+	/**
+	 */
 	int cruceGameLogic() {
 		return (0);
 	}
 
+	/**
+	 */
 	int main(int argc, String argv[]) {
 		return (0);
 	}
