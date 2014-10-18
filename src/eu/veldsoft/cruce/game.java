@@ -1,5 +1,14 @@
 package eu.veldsoft.cruce;
 
+class Game {
+	int numberPlayers;
+	int pointsNumber;
+	Round round;
+	Player players[] = new Player[constants.MAX_GAME_PLAYERS];
+	Team teams[] = new Team[constants.MAX_GAME_TEAMS];
+	Deck deck;
+}
+
 class game {
 
 	/**
@@ -70,7 +79,7 @@ class game {
 	 * @author	INFM042 F___80	 Boris Kirilov Kafaliev
 	 * @author	INFM042 F___24	 Rosen Ivanov Videv
 	 */
-	int maximumValue(Card cards[], final int length, final Suit suit) {
+	int maximumValue(Card cards[], final int length, final suit suit) {
 		return (0);
 	}
 

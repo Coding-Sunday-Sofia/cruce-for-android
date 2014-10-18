@@ -1,5 +1,9 @@
 package eu.veldsoft.cruce;
 
+class Deck {
+	Card cards[] = new Card[constants.DECK_SIZE];
+}
+
 class deck {
 	final int VALUES[] = { 2, 3, 4, 0, 10, 11, -1 };
 
@@ -8,7 +12,7 @@ class deck {
 	 * @author	INFM032 F___76	 Venelin Lyulinov Lozanov
 	 * @author	INFM032 F___32	 Boris Stefanov Karastanev
 	 */
-	Card deck_createCard(final Suit suit, final int value) {
+	Card deck_createCard(final suit suit, final int value) {
 		return (null);
 	}
 
@@ -61,7 +65,7 @@ class deck {
 	 * @author	INFM042 F___12	 Nikolay Todorov Hristov
 	 * @author	INFM042 F___75	 Mihail Genov Knebel
 	 */
-	int deck_compareCards(final Card card1, final Card card2, final Suit trump) {
+	int deck_compareCards(final Card card1, final Card card2, final suit trump) {
 		return (0);
 	}
 

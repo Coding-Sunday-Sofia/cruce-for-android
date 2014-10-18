@@ -1,6 +1,6 @@
 package eu.veldsoft.cruce;
 
-class Main {
+public class Main {
 	final String GAME_VERSION = "0.0.0";
 
 	final String GAME_HELP_MANUAL = "";
@@ -18,7 +18,6 @@ class Main {
 
 	/**
 	 */
-	int main(int argc, String argv[]) {
-		return (0);
+	public static void main(String args[]) {
 	}
 }
