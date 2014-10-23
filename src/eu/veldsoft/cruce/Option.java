@@ -1,4 +1,4 @@
 package eu.veldsoft.cruce;
 
-class option {
+class Option {
 }

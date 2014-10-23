@@ -1,18 +1,15 @@
 package eu.veldsoft.cruce;
 
 class Deck {
-	Card cards[] = new Card[constants.DECK_SIZE];
-}
-
-class deck {
 	final int VALUES[] = { 2, 3, 4, 0, 10, 11, -1 };
+	Card cards[] = new Card[Constants.DECK_SIZE];
 
 	/**
 	 * @author	INFM032 F___25	 Kalina Zhivkova Momkova
 	 * @author	INFM032 F___76	 Venelin Lyulinov Lozanov
 	 * @author	INFM032 F___32	 Boris Stefanov Karastanev
 	 */
-	Card deck_createCard(final suit suit, final int value) {
+	Card deck_createCard(final Suit suit, final int value) {
 		return (null);
 	}
 
@@ -31,7 +28,19 @@ class deck {
 	 * @author	INFM032 F___80	 Spas Kostov Hristov
 	 */
 	Deck deck_createDeck() {
-		return (null);
+		Deck deck = new Deck();
+
+		int k = 0;
+		for (int i = 0; Suit.values()[i] != Suit.SuitEnd; i++) {
+			Suit suit = Suit.values()[i];
+			for (int j = 0; VALUES[j] != -1; j++) {
+				Card card = deck_createCard(suit, VALUES[j]);
+				this.cards[k] = card;
+				k++;
+			}
+		}
+
+		return deck;
 	}
 
 	/**
@@ -49,6 +58,9 @@ class deck {
 	 * @author	INFM042 F___62	 Viktor Georgiev Petrov
 	 */
 	void deck_swap(Card a, Card b) {
+		Card c = a;
+		a = b;
+		b = c;
 	}
 
 	/**
@@ -57,7 +69,20 @@ class deck {
 	 * @author	INFM032 F___21	 Mariya Asenova Shindarova
 	 */
 	int deck_deckShuffle(Deck deck) {
-		return (0);
+		int swapInterval = Constants.SWAP_MAX - Constants.SWAP_MIN;
+		int noOfSwaps = (int) Math.random() % swapInterval + Constants.SWAP_MIN;
+
+		for (int i = 0; i < noOfSwaps; i++) {
+			int swapA = (int) Math.random() % Constants.DECK_SIZE;
+			int swapB = (int) Math.random() % Constants.DECK_SIZE;
+			if (swapA != swapB) {
+				Card cardA = deck.cards[swapA];
+				Card cardB = deck.cards[swapB];
+				deck_swap(cardA, cardB);
+			}
+		}
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
@@ -65,7 +90,7 @@ class deck {
 	 * @author	INFM042 F___12	 Nikolay Todorov Hristov
 	 * @author	INFM042 F___75	 Mihail Genov Knebel
 	 */
-	int deck_compareCards(final Card card1, final Card card2, final suit trump) {
+	int deck_compareCards(final Card card1, final Card card2, final Suit trump) {
 		return (0);
 	}
 

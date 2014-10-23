@@ -1,6 +1,6 @@
 package eu.veldsoft.cruce;
 
 class Card {
-    suit suit;
+    Suit suit;
     int value;
 }

@@ -1,6 +1,6 @@
 package eu.veldsoft.cruce;
 
-class constants {
+class Constants {
 	static final int MAX_CARDS = 8;
 
 	static final int MAX_TEAM_PLAYERS = 2;

@@ -1,14 +1,11 @@
 package eu.veldsoft.cruce;
 
 class Round {
-	suit trump;
-	Hand hands[] = new Hand[constants.MAX_HANDS];
-	int bids[] = new int[constants.MAX_GAME_PLAYERS];
-	Player players[] = new Player[constants.MAX_GAME_PLAYERS];
-	int pointsNumber[] = new int[constants.MAX_GAME_PLAYERS];
-}
-
-class round {
+	Suit trump;
+	Hand hands[] = new Hand[Constants.MAX_HANDS];
+	int bids[] = new int[Constants.MAX_GAME_PLAYERS];
+	Player players[] = new Player[Constants.MAX_GAME_PLAYERS];
+	int pointsNumber[] = new int[Constants.MAX_GAME_PLAYERS];
 
 	/**
 	 * @author	INFM032 F___94	 Stefan Lyudmilov Urumov
@@ -25,7 +22,16 @@ class round {
 	 * @author	INFM042 F___83	 Gabriel Valentinov Grigorov
 	 */
 	int round_deleteRound(Round round) {
-		return (0);
+		if (round.players == null) {
+			return Errors.ERROR_CODE.POINTER_NULL.getIndex();
+		}
+		if (round == null) {
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+		}
+
+		round = null;
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**

@@ -4,5 +4,5 @@ class Player {
 	String name;
 	int score;
 	int isHuman;
-	Card hand[] = new Card[constants.MAX_CARDS];
+	Card hand[] = new Card[Constants.MAX_CARDS];
 }

@@ -2,11 +2,7 @@ package eu.veldsoft.cruce;
 
 class Team {
 	int score;
-	Player players[] = new Player[constants.MAX_TEAM_PLAYERS];
-}
-
-class team {
-
+	Player players[] = new Player[Constants.MAX_TEAM_PLAYERS];
 	/**
 	 */
 	Player team_createPlayer(final char name, final int isHuman) {

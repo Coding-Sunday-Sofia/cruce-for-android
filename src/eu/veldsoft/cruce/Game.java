@@ -4,12 +4,9 @@ class Game {
 	int numberPlayers;
 	int pointsNumber;
 	Round round;
-	Player players[] = new Player[constants.MAX_GAME_PLAYERS];
-	Team teams[] = new Team[constants.MAX_GAME_TEAMS];
+	Player players[] = new Player[Constants.MAX_GAME_PLAYERS];
+	Team teams[] = new Team[Constants.MAX_GAME_TEAMS];
 	Deck deck;
-}
-
-class game {
 
 	/**
 	 * @author	INFM032 F___05	 Georgi Krumov Hristov
@@ -17,7 +14,26 @@ class game {
 	 * @author	INFM042 F___80	 Spas Kostov Hristov
 	 */
 	Game game_createGame(final int pointsNumber) {
-		return (null);
+		if (pointsNumber != 11 && pointsNumber != 15 && pointsNumber != 21) {
+			return null;
+		}
+
+		Game newGame = new Game();
+
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+			newGame.players[i] = null;
+		}
+
+		for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
+			newGame.teams[i] = null;
+		}
+
+		newGame.pointsNumber = pointsNumber;
+		newGame.numberPlayers = 0;
+		newGame.round = null;
+		newGame.deck = null;
+
+		return newGame;
 	}
 
 	/**
@@ -79,7 +95,7 @@ class game {
 	 * @author	INFM042 F___80	 Boris Kirilov Kafaliev
 	 * @author	INFM042 F___24	 Rosen Ivanov Videv
 	 */
-	int maximumValue(Card cards[], final int length, final suit suit) {
+	int maximumValue(Card cards[], final int length, final Suit suit) {
 		return (0);
 	}
 
