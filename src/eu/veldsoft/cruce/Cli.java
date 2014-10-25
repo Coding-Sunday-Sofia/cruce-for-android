@@ -255,7 +255,17 @@ class Cli {
 	 * @author	INFM032 F___21	 Trifon Zhivkov Trifonov
 	 */
 	int getBiggestScoreDialogLineSize(final Game currentGame) {
-		return (0);
+	    int biggestLineSize = 0;
+	    for(int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
+	        if(currentGame.teams[i] != null) { 
+	            int currentLine = getScoreDialogLineSize(currentGame.teams[i]);
+	            if(currentLine > biggestLineSize) {
+	               biggestLineSize = currentLine;
+	            }
+	        }
+	    }
+
+	    return biggestLineSize;
 	}
 
 	/**
