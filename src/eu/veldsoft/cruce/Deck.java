@@ -49,7 +49,16 @@ class Deck {
 	 * @author	INFM032 F___75	 Mihail Genov Knebel
 	 */
 	int deck_deleteDeck(Deck deck) {
-		return (0);
+		if ( deck == null ) {
+			return Errors.ERROR_CODE.POINTER_NULL.getIndex();
+			}
+	    	if ( deck.cards == null ) {
+			return Errors.ERROR_CODE.DECK_NULL.getIndex();
+			}
+
+	    	for ( int i = 0; i < Constants.DECK_SIZE; i ++ ) 
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
@@ -100,7 +109,19 @@ class Deck {
 	 * @author	INFM032 F___43	 Stefan Mitkov Nenchev
 	 */
 	int deck_cardsNumber(final Deck deck) {
-		return (0);
+    	if ( deck == null ) {
+		return Errors.ERROR_CODE.DECK_NULL.getIndex();
+		}
+
+	int cardsNumber = 0;
+    	for ( int i = 0; i < Constants.DECK_SIZE; i ++ ) {
+    		if ( deck.cards[i] != null ) {
+			cardsNumber ++ ;
+			}
+		}
+
+	return cardsNumber;
 	}
+	
 }
 
