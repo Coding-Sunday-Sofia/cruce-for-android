@@ -16,4 +16,6 @@ class Constants {
 	static final int MAX_GAME_PLAYERS = 4;
 
 	static final int MAX_GAME_TEAMS = 4;
+
+	public static final boolean WIN32 = false;
 }

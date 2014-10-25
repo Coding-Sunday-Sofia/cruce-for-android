@@ -71,7 +71,7 @@ class Cli {
 	            return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
 	    }
 	    
-	   /* if(DEBUG) {
+	   if(Constants.WIN32 == true) {
 		    char upLeftCorner[]        = {0xE2, 0x94, 0x8C, 0x00};
 		    char upRightCorner[]       = {0xE2, 0x94, 0x90, 0x00};
 		    char downLeftCorner[]      = {0xE2, 0x94, 0x94, 0x00};
@@ -85,12 +85,12 @@ class Cli {
 		    char downRightCorner[]     = {0xE2, 0x95, 0xAF, 0x00};
 		    char horizontalLine[]      = {0xE2, 0x94, 0x80, 0x00};
 		    char verticalLine[]        = {0xE2, 0x94, 0x82, 0x00};
-	    }*/
+	    }
 
-/*	    int x, y;
-	    getyx(win, y, x);
+	    int x=0, y=0;
+	    Globals.getyx(win, y, x);
 
-	    wattron(win, COLOR_PAIR(frameColor));
+/*	    wattron(win, COLOR_PAIR(frameColor));
 	    wprintw(win, "%s%s%s%s%s%s", upLeftCorner, horizontalLine, horizontalLine,
 	             horizontalLine, horizontalLine, upRightCorner);
 
