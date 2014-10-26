@@ -67,7 +67,16 @@ class Round {
 	 * @author	INFM032 F___31	 Danail Nedkov Rusev
 	 */
 	int round_findPlayerIndexRound(final Player player, final Round round) {
-		return (0);
+		if (player == null)
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+			if (round == null)
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+			int i = 0;
+			while (i < Constants.MAX_GAME_PLAYERS && round.players[i] != player)
+			i++;
+			if (i == Constants.MAX_GAME_PLAYERS)
+			return Errors.ERROR_CODE.NOT_FOUND.getIndex();
+			return i;
 	}
 
 	/**
@@ -94,7 +103,20 @@ class Round {
 	 * @author	INFM032 F___30	 Kristina Ivanova Dineva
 	 */
 	int round_addPlayerHand(Player player, Hand hand) {
-		return (0);
+		 if (player == null)
+			 return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+			 if (hand == null)
+			 return Errors.ERROR_CODE.HAND_NULL.getIndex();
+			 for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++)
+			 if (hand.players[i] == player)
+			 return Errors.ERROR_CODE.DUPLICATE.getIndex();
+			 int i = 0;
+			 while(hand.players[i] != null && i < Constants.MAX_GAME_PLAYERS)
+			 i++;
+			 if (i == Constants.MAX_GAME_PLAYERS)
+			 return Errors.ERROR_CODE.FULL.getIndex();
+			 hand.players[i] = player;
+			 return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
