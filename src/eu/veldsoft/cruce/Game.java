@@ -78,7 +78,25 @@ class Game {
 	 * @author	INFM032 F___33	 Veselka Penkova Peycheva
 	 */
 	int game_removeTeam(final Team team, Game game) {
-		return (0);
+		if ( team == null ) {
+			return Errors.ERROR_CODE.TEAM_NULL.getIndex();
+			}
+	    	if ( game == null ) {
+			return Errors.ERROR_CODE.GAME_NULL.getIndex();
+			}
+
+		int i = 0;
+	    	while ( i < Constants.MAX_GAME_TEAMS && game.teams[i] != team ) {
+			i ++ ;
+			}
+
+	    	if ( i == Constants.MAX_GAME_TEAMS ) {
+			return Errors.ERROR_CODE.NOT_FOUND.getIndex();
+			}
+
+		game.teams[i] = null;
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
@@ -154,7 +172,7 @@ class Game {
 	 * @author	INFM042 F___33	 Veselka Penkova Peycheva
 	 */
 	int game_updateScore(final Game game, Player bidWinner) {
-		return (0);
+		return 0;
 	}
 
 	/**
