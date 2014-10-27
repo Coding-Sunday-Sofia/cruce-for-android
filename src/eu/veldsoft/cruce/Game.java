@@ -43,6 +43,7 @@ class Game {
 	 */
 	int game_deleteGame(Game game) {
 		return (0);
+		//Just a test commit
 	}
 
 	/**
