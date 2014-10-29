@@ -115,8 +115,16 @@ class Game {
 	 * @author	INFM042 F___24	 Rosen Ivanov Videv
 	 */
 	int maximumValue(Card cards[], final int length, final Suit suit) {
-		return (0);
-	}
+		
+			int maxValue = -1;
+		    for (int i = 0; i < length; i++)
+		        if (cards[i] != null && cards[i].suit == suit &&
+		            cards[i].value > maxValue)
+		        maxValue = cards[i].value;
+
+		    return maxValue;
+		}
+	
 
 	/**
 	 * @author	INFM042 F___29	 Diana Ilieva Dyulgerova
