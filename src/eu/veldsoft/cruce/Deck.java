@@ -1,6 +1,7 @@
 package eu.veldsoft.cruce;
 
 class Deck {
+	private static final Suit SuitEnd = null;
 	final int VALUES[] = { 2, 3, 4, 0, 10, 11, -1 };
 	Card cards[] = new Card[Constants.DECK_SIZE];
 
@@ -10,7 +11,30 @@ class Deck {
 	 * @author	INFM032 F___32	 Boris Stefanov Karastanev
 	 */
 	Card deck_createCard(final Suit suit, final int value) {
-		return (null);
+		Card Card = new Card();
+
+	    if (Card == null)
+	        return null;
+
+	    if (suit == SuitEnd)
+	        return null;
+
+	    int count = 0;
+	    for (int i = 0; VALUES[i] != -1; i++)
+	        if (value == VALUES[i])
+	            count++;
+	    if (count != 1)
+	        return null;
+
+	    Card.value = value;
+	    Card.suit = suit;
+
+	    return Card;
+	}
+
+	private eu.veldsoft.cruce.Card malloc(Card card) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
