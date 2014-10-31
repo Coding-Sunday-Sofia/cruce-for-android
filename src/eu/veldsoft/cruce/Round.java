@@ -8,18 +8,18 @@ class Round {
 	int pointsNumber[] = new int[Constants.MAX_GAME_PLAYERS];
 
 	/**
-	 * @author	INFM032 F___94	 Stefan Lyudmilov Urumov
-	 * @author	INFM042 F___98	 Simona Ilkova Boneva
-	 * @author	INFM042 F___77	 Yosif Rumenov Enev
+	 * @author INFM032 F___94 Stefan Lyudmilov Urumov
+	 * @author INFM042 F___98 Simona Ilkova Boneva
+	 * @author INFM042 F___77 Yosif Rumenov Enev
 	 */
 	Round round_createRound() {
 		return (null);
 	}
 
 	/**
-	 * @author	INFM042 F___76	 Venelin Lyulinov Lozanov
-	 * @author	INFM042 F___04	 Petar Aleksandrov Vorotnikov
-	 * @author	INFM042 F___83	 Gabriel Valentinov Grigorov
+	 * @author INFM042 F___76 Venelin Lyulinov Lozanov
+	 * @author INFM042 F___04 Petar Aleksandrov Vorotnikov
+	 * @author INFM042 F___83 Gabriel Valentinov Grigorov
 	 */
 	int round_deleteRound(Round round) {
 		if (round.players == null) {
@@ -35,88 +35,88 @@ class Round {
 	}
 
 	/**
-	 * @author	INFM042 F___05	 Georgi Krumov Hristov
-	 * @author	INFM042 F___76	 Venelin Lyulinov Lozanov
-	 * @author	INFM042 F___24	 Rosen Ivanov Videv
+	 * @author INFM042 F___05 Georgi Krumov Hristov
+	 * @author INFM042 F___76 Venelin Lyulinov Lozanov
+	 * @author INFM042 F___24 Rosen Ivanov Videv
 	 */
 	Hand round_createHand() {
 		return (null);
 	}
 
 	/**
-	 * @author	INFM032 F___32	 Boris Stefanov Karastanev
-	 * @author	INFM042 F___75	 Mihail Genov Knebel
-	 * @author	INFM042 F___79	 Viktor Georgiev Chanev
+	 * @author INFM032 F___32 Boris Stefanov Karastanev
+	 * @author INFM042 F___75 Mihail Genov Knebel
+	 * @author INFM042 F___79 Viktor Georgiev Chanev
 	 */
 	int round_deleteHand(Hand hand) {
 		return (0);
 	}
 
 	/**
-	 * @author	INFM032 F___12	 Nikolay Todorov Hristov
-	 * @author	INFM032 F___79	 Viktor Georgiev Chanev
-	 * @author	INFM032 F___05	 Georgi Krumov Hristov
+	 * @author INFM032 F___12 Nikolay Todorov Hristov
+	 * @author INFM032 F___79 Viktor Georgiev Chanev
+	 * @author INFM032 F___05 Georgi Krumov Hristov
 	 */
 	Player round_getBidWinner(final Round round) {
 		return (null);
 	}
 
 	/**
-	 * @author	INFM042 F___21	 Trifon Zhivkov Trifonov
-	 * @author	INFM032 F___30	 Kristina Ivanova Dineva
-	 * @author	INFM032 F___31	 Danail Nedkov Rusev
+	 * @author INFM042 F___21 Trifon Zhivkov Trifonov
+	 * @author INFM032 F___30 Kristina Ivanova Dineva
+	 * @author INFM032 F___31 Danail Nedkov Rusev
 	 */
 	int round_findPlayerIndexRound(final Player player, final Round round) {
 		if (player == null)
 			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
-			if (round == null)
+		if (round == null)
 			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
-			int i = 0;
-			while (i < Constants.MAX_GAME_PLAYERS && round.players[i] != player)
+		int i = 0;
+		while (i < Constants.MAX_GAME_PLAYERS && round.players[i] != player)
 			i++;
-			if (i == Constants.MAX_GAME_PLAYERS)
+		if (i == Constants.MAX_GAME_PLAYERS)
 			return Errors.ERROR_CODE.NOT_FOUND.getIndex();
-			return i;
+		return i;
 	}
 
 	/**
-	 * @author	INFM042 F___06	 Milen Tsvetanov Pankov
-	 * @author	INFM032 F___32	 Boris Stefanov Karastanev
-	 * @author	INFM042 F___80	 Goritsa Ivanova Yanakieva
+	 * @author INFM042 F___06 Milen Tsvetanov Pankov
+	 * @author INFM032 F___32 Boris Stefanov Karastanev
+	 * @author INFM042 F___80 Goritsa Ivanova Yanakieva
 	 */
 	int round_placeBid(final Player player, final int bid, Round round) {
 		return (0);
 	}
 
 	/**
-	 * @author	INFM032 F___76	 Venelin Lyulinov Lozanov
-	 * @author	INFM042 F___04	 Petar Aleksandrov Vorotnikov
-	 * @author	INFM042 F___80	 Goritsa Ivanova Yanakieva
+	 * @author INFM032 F___76 Venelin Lyulinov Lozanov
+	 * @author INFM042 F___04 Petar Aleksandrov Vorotnikov
+	 * @author INFM042 F___80 Goritsa Ivanova Yanakieva
 	 */
 	int round_addPlayer(Player player, Round round) {
 		return (0);
 	}
 
 	/**
-	 * @author	INFM032 F___77	 Yosif Rumenov Enev
-	 * @author	INFM032 F___62	 Viktor Georgiev Petrov
-	 * @author	INFM032 F___30	 Kristina Ivanova Dineva
+	 * @author INFM032 F___77 Yosif Rumenov Enev
+	 * @author INFM032 F___62 Viktor Georgiev Petrov
+	 * @author INFM032 F___30 Kristina Ivanova Dineva
 	 */
 	int round_addPlayerHand(Player player, Hand hand) {
-		 if (player == null)
-			 return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
-			 if (hand == null)
-			 return Errors.ERROR_CODE.HAND_NULL.getIndex();
-			 for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++)
-			 if (hand.players[i] == player)
-			 return Errors.ERROR_CODE.DUPLICATE.getIndex();
-			 int i = 0;
-			 while(hand.players[i] != null && i < Constants.MAX_GAME_PLAYERS)
-			 i++;
-			 if (i == Constants.MAX_GAME_PLAYERS)
-			 return Errors.ERROR_CODE.FULL.getIndex();
-			 hand.players[i] = player;
-			 return Errors.ERROR_CODE.NO_ERROR.getIndex();
+		if (player == null)
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		if (hand == null)
+			return Errors.ERROR_CODE.HAND_NULL.getIndex();
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++)
+			if (hand.players[i] == player)
+				return Errors.ERROR_CODE.DUPLICATE.getIndex();
+		int i = 0;
+		while (hand.players[i] != null && i < Constants.MAX_GAME_PLAYERS)
+			i++;
+		if (i == Constants.MAX_GAME_PLAYERS)
+			return Errors.ERROR_CODE.FULL.getIndex();
+		hand.players[i] = player;
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
@@ -204,4 +204,3 @@ class Round {
 		return (0);
 	}
 }
-

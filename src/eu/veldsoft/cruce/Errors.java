@@ -27,7 +27,7 @@ class Errors {
 
 	/**
 	 */
-	final String error(final int error_code) {	
+	final String error(final int error_code) {
 		return ("");
 	}
 }
