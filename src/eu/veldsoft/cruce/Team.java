@@ -32,7 +32,7 @@ class Team {
 	 * @date 04 Nov 2014
 	 * 
 	 */
-	Player team_createPlayer(final String name, final int isHuman) {
+	static Player team_createPlayer(final String name, final int isHuman) {
 		if (name == null) {
 			return null;
 		}
