@@ -166,12 +166,30 @@ class Game {
 	}
 
 	/**
+	 * @param game
+	 * @param player
+	 * 
+	 * @return
+	 * 
 	 * @author INFM032 F___05 Georgi Krumov Hristov
 	 * @author INFM032 F___80 Goritsa Ivanova Yanakieva
 	 * @author INFM032 F___76 Venelin Lyulinov Lozanov
 	 */
 	Team game_findTeam(final Game game, Player player) {
-		return (null);
+		if (player == null)
+			return null;
+		if (game == null)
+			return null;
+
+		for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
+			if (game.teams[i] != null) {
+				for (int j = 0; j < Constants.MAX_TEAM_PLAYERS; j++)
+					if (game.teams[i].players[j] == player)
+						return game.teams[i];
+			}
+		}
+
+		return null;
 	}
 
 	/**

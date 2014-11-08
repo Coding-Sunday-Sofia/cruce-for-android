@@ -15,11 +15,30 @@ class Cli {
 	}
 
 	/**
+	 * @param team
+	 * 
 	 * @author INFM042 F___80 Goritsa Ivanova Yanakieva
 	 * @author INFM032 F___83 Gabriel Valentinov Grigorov
 	 * @author INFM032 F___21 Trifon Zhivkov Trifonov
 	 */
-	void gameEndingMessage(Team team) {
+	void gameEndingMessage(final Team team) {
+		Globals.printw(" ______           _    ____   __    _____    \n"
+				+ "|  ____|         | |  / __ \\ / _|  / ____|      \n"
+				+ "| |__   _ __   __| | | |  | | |_  | |  __  __ _ _ __ ___   ___ \n"
+				+ "|  __| | '_ \\ / _` | | |  | |  _| | | |_ |/ _` | '_ ` _ \\ / _ \\\n"
+				+ "| |____| | | | (_| | | |__| | |   | |__| | (_| | | | | | |  __/\n"
+				+ "|______|_| |_|\\__,_|  \\____/|_|    \\_____|\\__,_|_| |_| |_|\\___|\n"
+				+ "\n\n");
+
+		for (int i = Constants.MAX_TEAM_PLAYERS - 1; i >= 0; --i)
+			if (team.players[i] != null) {
+				if (i > 0) {
+					Globals.printw("%s, ", team.players[i].name);
+				} else {
+					Globals.printw("%s ", team.players[i].name);
+				}
+			}
+		Globals.printw("won the game.");
 	}
 
 	/**
@@ -148,12 +167,29 @@ class Cli {
 	}
 
 	/**
+	 * @param i
+	 * 
+	 * @return
+	 * 
 	 * @author INFM032 F___77 Yosif Rumenov Enev
 	 * @author INFM032 F___80 Goritsa Ivanova Yanakieva
 	 * @author INFM032 F___04 Petar Aleksandrov Vorotnikov
 	 */
 	Player newPlayer(final int i) {
-		return (null);
+		/*
+		 * Used to store the format string.
+		 */
+		String format = "";
+		String name = "";
+
+		do {
+			Globals.printw("Insert player %d name: ", i);
+			Globals.sprintf(format, "%%%i[^\n]", MAX_NAME_SIZE);
+			Globals.scanw(format, name);
+		} while (name.length() == 0);
+
+		Player player = Team.team_createPlayer(name, 1);
+		return player;
 	}
 
 	/**
@@ -214,18 +250,34 @@ class Cli {
 	 * @author INFM032 F___31 Danail Nedkov Rusev
 	 * @author INFM042 F___29 Diana Ilieva Dyulgerova
 	 */
-	int processingScore(final char score) {
+	int processingScore(final String score) {
 		return (0);
 	}
 
 	/**
+	 * @return 
+	 * 
 	 * @author INFM042 F___62 Viktor Georgiev Petrov
 	 * @author INFM042 F___25 Kalina Zhivkova Momkova
 	 * @author INFM042 F___21 Trifon Zhivkov Trifonov
 	 */
 	int getScoreLimit() {
-		return (0);
-	}
+		String score = "";
+
+	    do{
+	        Globals.printw("Insert the score limit (11-15-21): ");
+	        Globals.scanw("%s", score);
+	    } while(score.length() == 0);
+
+	    while (processingScore(score) == -1) {
+	    	Globals.printw("Insert the correct score limit (11-15-21): ");
+	    	Globals.scanw("%s", score);
+	    }
+	    
+	    Globals.printw("\n");
+
+	    return processingScore(score);
+	 }
 
 	/**
 	 * @author INFM042 F___25 Kalina Zhivkova Momkova
