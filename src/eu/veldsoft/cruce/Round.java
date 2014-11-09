@@ -17,18 +17,19 @@ class Round {
 	}
 
 	/**
+	 * @param round - reference to the round to be deleted
+	 * @return - error code
 	 * @author INFM042 F___76 Venelin Lyulinov Lozanov
 	 * @author INFM042 F___04 Petar Aleksandrov Vorotnikov
 	 * @author INFM042 F___83 Gabriel Valentinov Grigorov
 	 */
 	int round_deleteRound(Round round) {
-		if (round.players == null) {
-			return Errors.ERROR_CODE.POINTER_NULL.getIndex();
-		}
+		// Check whether the round is already null.
 		if (round == null) {
 			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
 		}
 
+		// Delete round.
 		round = null;
 
 		return Errors.ERROR_CODE.NO_ERROR.getIndex();
@@ -89,6 +90,9 @@ class Round {
 	}
 
 	/**
+	 * @param player - reference to the player to be added in the round
+	 * @param round - reference to the round where the player will be added
+	 * @return - error code
 	 * @author INFM032 F___76 Venelin Lyulinov Lozanov
 	 * @author INFM042 F___04 Petar Aleksandrov Vorotnikov
 	 * @author INFM042 F___80 Goritsa Ivanova Yanakieva
