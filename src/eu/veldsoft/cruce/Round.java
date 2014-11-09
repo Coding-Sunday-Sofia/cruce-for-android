@@ -94,7 +94,40 @@ class Round {
 	 * @author INFM042 F___80 Goritsa Ivanova Yanakieva
 	 */
 	int round_addPlayer(Player player, Round round) {
-		return (0);
+		
+		// check player
+		if (player == null) {
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		}
+		
+		// check round
+	    if (round == null) {
+	    	return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+	    }
+
+	    int index = round_findPlayerIndexRound(player, round);
+	    
+	    // impossible to add same player multiple time
+	    if (index >= 0) {
+	    	return Errors.ERROR_CODE.DUPLICATE.getIndex();
+	    }
+
+	    // check for empty slot
+	    int i = 0;
+	    while(round.players[i] != null && i < Constants.MAX_GAME_PLAYERS)
+	    {
+	        i++;
+	    }
+	    
+	    // check players length
+	    if (i == Constants.MAX_GAME_PLAYERS) {
+	    	return Errors.ERROR_CODE.FULL.getIndex();
+	    }
+	    
+	    // add player to the slot
+	    round.players[i] = player;
+
+	    return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**

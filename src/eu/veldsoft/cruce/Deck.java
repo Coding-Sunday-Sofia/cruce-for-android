@@ -43,7 +43,17 @@ class Deck {
 	 * @author INFM032 F___79 Viktor Georgiev Chanev
 	 */
 	int deck_deleteCard(Card card) {
-		return (0);
+		
+		// check whether the card is already deleted
+		if (card == null)
+		{
+			return Errors.ERROR_CODE.CARD_NULL.getIndex();
+		}
+
+		// delete card
+		card = null;
+		
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**

@@ -42,8 +42,16 @@ class Game {
 	 * @author INFM032 F___25 Kalina Zhivkova Momkova
 	 */
 	int game_deleteGame(Game game) {
-		return (0);
-		// Just a test commit
+		
+		// check whether the game is already deleted
+		if (game == null) {
+	        return Errors.ERROR_CODE.GAME_NULL.getIndex();
+		}
+
+	    // delete game
+	    game = null;
+
+	    return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
