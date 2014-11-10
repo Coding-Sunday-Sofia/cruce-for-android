@@ -17,7 +17,8 @@ class Round {
 	}
 
 	/**
-	 * @param round - reference to the round to be deleted
+	 * @param round
+	 *            - reference to the round to be deleted
 	 * @return - error code
 	 * @author INFM042 F___76 Venelin Lyulinov Lozanov
 	 * @author INFM042 F___04 Petar Aleksandrov Vorotnikov
@@ -90,48 +91,49 @@ class Round {
 	}
 
 	/**
-	 * @param player - reference to the player to be added in the round
-	 * @param round - reference to the round where the player will be added
+	 * @param player
+	 *            - reference to the player to be added in the round
+	 * @param round
+	 *            - reference to the round where the player will be added
 	 * @return - error code
 	 * @author INFM032 F___76 Venelin Lyulinov Lozanov
 	 * @author INFM042 F___04 Petar Aleksandrov Vorotnikov
 	 * @author INFM042 F___80 Goritsa Ivanova Yanakieva
 	 */
 	int round_addPlayer(Player player, Round round) {
-		
+
 		// check player
 		if (player == null) {
 			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
 		}
-		
+
 		// check round
-	    if (round == null) {
-	    	return Errors.ERROR_CODE.ROUND_NULL.getIndex();
-	    }
+		if (round == null) {
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+		}
 
-	    int index = round_findPlayerIndexRound(player, round);
-	    
-	    // impossible to add same player multiple time
-	    if (index >= 0) {
-	    	return Errors.ERROR_CODE.DUPLICATE.getIndex();
-	    }
+		int index = round_findPlayerIndexRound(player, round);
 
-	    // check for empty slot
-	    int i = 0;
-	    while(round.players[i] != null && i < Constants.MAX_GAME_PLAYERS)
-	    {
-	        i++;
-	    }
-	    
-	    // check players length
-	    if (i == Constants.MAX_GAME_PLAYERS) {
-	    	return Errors.ERROR_CODE.FULL.getIndex();
-	    }
-	    
-	    // add player to the slot
-	    round.players[i] = player;
+		// impossible to add same player multiple time
+		if (index >= 0) {
+			return Errors.ERROR_CODE.DUPLICATE.getIndex();
+		}
 
-	    return Errors.ERROR_CODE.NO_ERROR.getIndex();
+		// check for empty slot
+		int i = 0;
+		while (round.players[i] != null && i < Constants.MAX_GAME_PLAYERS) {
+			i++;
+		}
+
+		// check players length
+		if (i == Constants.MAX_GAME_PLAYERS) {
+			return Errors.ERROR_CODE.FULL.getIndex();
+		}
+
+		// add player to the slot
+		round.players[i] = player;
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
@@ -140,19 +142,31 @@ class Round {
 	 * @author INFM032 F___30 Kristina Ivanova Dineva
 	 */
 	int round_addPlayerHand(Player player, Hand hand) {
-		if (player == null)
+		if (player == null) {
 			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
-		if (hand == null)
+		}
+
+		if (hand == null) {
 			return Errors.ERROR_CODE.HAND_NULL.getIndex();
-		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++)
-			if (hand.players[i] == player)
+		}
+
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+			if (hand.players[i] == player) {
 				return Errors.ERROR_CODE.DUPLICATE.getIndex();
+			}
+		}
+
 		int i = 0;
-		while (hand.players[i] != null && i < Constants.MAX_GAME_PLAYERS)
+		while (hand.players[i] != null && i < Constants.MAX_GAME_PLAYERS) {
 			i++;
-		if (i == Constants.MAX_GAME_PLAYERS)
+		}
+
+		if (i == Constants.MAX_GAME_PLAYERS) {
 			return Errors.ERROR_CODE.FULL.getIndex();
+		}
+
 		hand.players[i] = player;
+
 		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
