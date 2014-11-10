@@ -64,7 +64,7 @@ class Team {
 	 */
 	Team team_createTeam() {
 		Team newTeam = new Team();
-		
+
 		if (newTeam == null) {
 			return null;
 		}
@@ -72,7 +72,7 @@ class Team {
 		newTeam.score = 0;
 		newTeam.players[0] = null;
 		newTeam.players[1] = null;
-		
+
 		return newTeam;
 	}
 
@@ -92,7 +92,7 @@ class Team {
 		if (team == null) {
 			return Errors.ERROR_CODE.TEAM_NULL.getIndex();
 		}
-		
+
 		if (player == null) {
 			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
 		}
@@ -102,7 +102,7 @@ class Team {
 				return Errors.ERROR_CODE.DUPLICATE.getIndex();
 			}
 		}
-		
+
 		for (int i = 0; i < Constants.MAX_TEAM_PLAYERS; i++) {
 			if (team.players[i] == null) {
 				team.players[i] = player;
@@ -113,25 +113,72 @@ class Team {
 		return Errors.ERROR_CODE.TEAM_FULL.getIndex();
 	}
 
-	// TODO be done by ALEX
 	/**
+	 * Method remove a player in a game.
+	 * 
+	 * @param team
+	 * @param player
+	 * 
+	 * @return int
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 6 november 2014
 	 */
 	int team_removePlayer(Team team, final Player player) {
-		return (0);
+		if (team == null) {
+			return (Errors.ERROR_CODE.TEAM_NULL.getIndex());
+		}
+		if (player == null) {
+			return (Errors.ERROR_CODE.PLAYER_NULL.getIndex());
+		}
+		for (int i = 0; i < Constants.MAX_TEAM_PLAYERS; i++) {
+			if (team.players[i] == player) {
+				team.players[i] = null;
+				return (Errors.ERROR_CODE.NO_ERROR.getIndex());
+			}
+		}
+
+		return (Errors.ERROR_CODE.NOT_FOUND.getIndex());
 	}
 
-	// TODO be done bt Alex
 	/**
+	 * Function delete a team in a game.
+	 * 
+	 * @param team
+	 * @return int
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 6 november 2014
 	 */
 	int team_deleteTeam(Team team) {
-		return (0);
+		if (team == null) {
+			return (Errors.ERROR_CODE.TEAM_NULL.getIndex());
+		}
+		team = null;
+
+		return (Errors.ERROR_CODE.NO_ERROR.getIndex());
 	}
 
-	// TODO be done by ALex
 	/**
+	 * Function for delete the player from game;
+	 * 
+	 * @param player
+	 * 
+	 * @return int
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 06 Nov 2014
 	 */
 	int team_deletePlayer(Player player) {
-		return (0);
+		if (player == null) {
+			return (Errors.ERROR_CODE.PLAYER_NULL.getIndex());
+		}
+
+		player = null;
+		return (Errors.ERROR_CODE.NO_ERROR.getIndex());
 	}
 
 	/**
@@ -148,24 +195,24 @@ class Team {
 		if (player == null) {
 			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
 		}
-		
+
 		if (card == null) {
 			return Errors.ERROR_CODE.CARD_NULL.getIndex();
 		}
-		
+
 		for (int i = 0; i < Constants.MAX_CARDS; i++) {
 			if (player.hand[i] == card) {
 				return Errors.ERROR_CODE.DUPLICATE.getIndex();
 			}
 		}
-		
+
 		for (int i = 0; i < Constants.MAX_CARDS; i++) {
 			if (player.hand[i] == null) {
 				player.hand[i] = card;
 				return Errors.ERROR_CODE.NO_ERROR.getIndex();
 			}
 		}
-		
+
 		return (Errors.ERROR_CODE.FULL.getIndex());
 	}
 
@@ -177,8 +224,27 @@ class Team {
 	}
 
 	/**
+	 * Function for update a score of the team in game.
+	 * 
+	 * @param team
+	 * 
+	 * @return int
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 6 november 2014
 	 */
 	int team_updatePlayersScore(Team team) {
-		return (0);
+		if (team == null) {
+			return (Errors.ERROR_CODE.TEAM_NULL.getIndex());
+		}
+
+		for (int i = 0; i < Constants.MAX_TEAM_PLAYERS; i++) {
+			if (team.players[i] != null) {
+				team.players[i].score = team.score;
+			}
+		}
+
+		return (Errors.ERROR_CODE.NO_ERROR.getIndex());
 	}
 }
