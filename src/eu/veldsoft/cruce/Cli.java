@@ -1,5 +1,7 @@
 package eu.veldsoft.cruce;
 
+import java.util.Scanner;
+
 class Cli {
 	final int MAX_CARDS_PER_LINE = 8;
 
@@ -207,8 +209,14 @@ class Cli {
 	 * @author INFM032 F___94 Stefan Lyudmilov Urumov
 	 */
 	void createEmptyTeams(Game game) {
-		
-		
+		for(int i=0; i  < Constants.MAX_GAME_PLAYERS; i++) {
+			if(game.players != null && i < game.players.length) { // validate if the players array is initialized with the correct length
+				Team team = new Team(); // initialize Team object with default constructor (this should not be needed if the team_createTeam method is static
+				team = team.team_createTeam(); // team_createTeam() should be marked as static
+				team.team_addPlayer(team, game.players[i]);
+				game.game_addTeam(team, game);
+			}
+		}
 	}
 
 	/**
@@ -217,7 +225,67 @@ class Cli {
 	 * @author INFM032 F___06 Milen Tsvetanov Pankov
 	 */
 	int formTeams(Game game) {
-		return (0);
+		if(game == null) {
+			return Errors.ERROR_CODE.GAME_NULL.getIndex();
+		}
+		
+		if(game.numberPlayers == 0) {
+			return Errors.ERROR_CODE.GAME_EMPTY.getIndex();
+		}
+		
+		if(game.numberPlayers == 1) {
+			return Errors.ERROR_CODE.INSUFFICIENT_PLAYERS.getIndex();
+		}
+		
+		if(game.numberPlayers < 4) {
+			createEmptyTeams(game);
+			return Errors.ERROR_CODE.NO_ERROR.getIndex();
+		}
+		
+		System.out.print("Do you want to play on teams? (Y/n) ");
+		Scanner scanner = new Scanner(System.in);
+		String answer = scanner.nextLine();
+		System.out.println(""); // add new line for better readability
+		
+		if(answer == null || answer.equalsIgnoreCase("n")) {
+			createEmptyTeams(game);
+			return Errors.ERROR_CODE.NO_ERROR.getIndex();
+		}
+		
+		System.out.print("Player 1 (" + game.players[0].name + "): Please insert your teammate's id: ");
+		int playerId = 0;
+		
+		while(playerId < 2 || playerId > 4) {
+			answer = scanner.nextLine();
+		
+			try {
+				playerId = Integer.valueOf(answer);
+			} catch(NumberFormatException nfe) { // incorrect digit entered
+				playerId = 0; 
+			}
+			
+			if(playerId < 2 || playerId > 4) {
+				System.out.print("\nPlease insert a correct player id. ");
+			}
+		}
+	
+		System.out.println(""); // empty line
+		
+		playerId--;
+		
+		Player backup = game.players[1];
+		game.players[1] = game.players[playerId];
+		game.players[playerId] = backup;
+		
+		for(int i=0; i<2; i++) {
+			Team team = new Team();
+			team = team.team_createTeam(); // should be static
+			team.team_addPlayer(team, game.players[2*i]);
+			team.team_addPlayer(team, game.players[2*i + 1]);
+			game.game_addTeam(team, game);
+		}
+		
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
