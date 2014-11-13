@@ -64,12 +64,29 @@ class Game {
 	}
 
 	/**
+	 * @param player
+	 * @param game
 	 * @author INFM032 F___24 Rosen Ivanov Videv
 	 * @author INFM042 F___77 Yosif Rumenov Enev
 	 * @author INFM042 F___30 Kristina Ivanova Dineva
 	 */
 	int game_removePlayer(final Player player, Game game) {
-		return (0);
+		 if (player == null)
+		        return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		    if (game == null)
+		        return Errors.ERROR_CODE.GAME_NULL.getIndex();
+
+		    int i = 0;
+		    while (i < Constants.MAX_GAME_PLAYERS && game.players[i] != player)
+		        i++;
+
+		    if (i == Constants.MAX_GAME_PLAYERS)
+		        return Errors.ERROR_CODE.NOT_FOUND.getIndex();
+
+		    game.players[i] = null;
+		    game.numberPlayers--;
+		    
+		    return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
