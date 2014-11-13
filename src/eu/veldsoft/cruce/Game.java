@@ -60,7 +60,33 @@ class Game {
 	 * @author INFM042 F___21 Trifon Zhivkov Trifonov
 	 */
 	int game_addPlayer(Player player, Game game) {
-		return (0);
+		if(player == null) {
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		}
+		
+		if(game == null) {
+			return Errors.ERROR_CODE.GAME_NULL.getIndex();
+		}
+		
+		for(int i=0; i<Constants.MAX_GAME_PLAYERS; i++) { // run validation for already existing player
+			if(game.players != null && i < game.players.length && game.players[i].equals(player)) { // Player.java must override equals method
+				return Errors.ERROR_CODE.DUPLICATE.getIndex();
+			}
+			
+			if(game.players != null && i < game.players.length && game.players[i].name.equals(player.name)) {
+				return Errors.ERROR_CODE.DUPLICATE_NAME.getIndex();
+			}
+		}
+		
+		for(int i=0; i<Constants.MAX_GAME_PLAYERS; i++) { // find empty slot and put the player there
+			if(game.players[i] == null) {
+				game.players[i] = player;
+				game.numberPlayers++;
+				return Errors.ERROR_CODE.NO_ERROR.getIndex();
+			}
+		}
+		
+		return Errors.ERROR_CODE.FULL.getIndex();
 	}
 
 	/**
