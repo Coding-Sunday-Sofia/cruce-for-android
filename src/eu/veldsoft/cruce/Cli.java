@@ -207,6 +207,8 @@ class Cli {
 	 * @author INFM032 F___94 Stefan Lyudmilov Urumov
 	 */
 	void createEmptyTeams(Game game) {
+		
+		
 	}
 
 	/**
