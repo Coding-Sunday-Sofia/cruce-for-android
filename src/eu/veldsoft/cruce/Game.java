@@ -90,12 +90,31 @@ class Game {
 	}
 
 	/**
+	 * @param team
+	 * @param game
 	 * @author INFM032 F___83 Gabriel Valentinov Grigorov
 	 * @author INFM042 F___94 Stefan Lyudmilov Urumov
 	 * @author INFM042 F___77 Yosif Rumenov Enev
 	 */
 	int game_addTeam(Team team, Game game) {
-		return (0);
+		if (team == null)
+	        return Errors.ERROR_CODE.TEAM_NULL.getIndex();
+	    if (game == null)
+	        return Errors.ERROR_CODE.GAME_NULL.getIndex();
+
+	    for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
+	        if (game.teams[i] == team)
+	            return Errors.ERROR_CODE.DUPLICATE.getIndex();
+	    }
+
+	    for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
+	        if (game.teams[i] == null) {
+	            game.teams[i] = team;
+	            return Errors.ERROR_CODE.NO_ERROR.getIndex();
+	        }
+	    }
+
+	    return Errors.ERROR_CODE.FULL.getIndex();
 	}
 
 	/**
