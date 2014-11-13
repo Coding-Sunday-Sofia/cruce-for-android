@@ -87,7 +87,35 @@ class Round {
 	 * @author INFM042 F___80 Goritsa Ivanova Yanakieva
 	 */
 	int round_placeBid(final Player player, final int bid, Round round) {
-		return (0);
+		if(player == null) {
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		}
+		
+		if(round == null) {
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+		}
+		
+		if(bid < 0 || bid > 6) {
+			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
+		}
+
+		if(bid > 0) {
+			for(int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+				if(round.bids[i] > bid) {
+					return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
+				}
+			}
+		}
+		
+		int index = round.round_findPlayerIndexRound(player, round);
+		
+		if(index < 0) {
+			return Errors.ERROR_CODE.NOT_FOUND.getIndex();
+		}
+		
+		round.bids[index] = bid;
+		
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
