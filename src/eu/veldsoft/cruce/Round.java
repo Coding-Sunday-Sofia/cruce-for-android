@@ -87,7 +87,7 @@ class Round {
 	 * @author INFM032 F___30 Kristina Ivanova Dineva
 	 * @author INFM032 F___31 Danail Nedkov Rusev
 	 */
-	int round_findPlayerIndexRound(final Player player, final Round round) {
+	static int round_findPlayerIndexRound(final Player player, final Round round) {
 		if (player == null)
 			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
 		if (round == null)

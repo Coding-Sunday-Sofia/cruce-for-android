@@ -62,7 +62,7 @@ class Team {
 	 * @date 04 Nov 2014
 	 * 
 	 */
-	Team team_createTeam() {
+	static Team team_createTeam() {
 		Team newTeam = new Team();
 
 		if (newTeam == null) {
@@ -88,7 +88,7 @@ class Team {
 	 * @date 04 Nov 2014
 	 * 
 	 */
-	int team_addPlayer(Team team, Player player) {
+	static int team_addPlayer(Team team, Player player) {
 		if (team == null) {
 			return Errors.ERROR_CODE.TEAM_NULL.getIndex();
 		}
@@ -234,7 +234,7 @@ class Team {
 	 * @email aleksandarjelin@gmail.com
 	 * @date 6 november 2014
 	 */
-	int team_updatePlayersScore(Team team) {
+	static int team_updatePlayersScore(Team team) {
 		if (team == null) {
 			return (Errors.ERROR_CODE.TEAM_NULL.getIndex());
 		}

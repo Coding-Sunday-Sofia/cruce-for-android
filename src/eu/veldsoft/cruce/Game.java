@@ -122,7 +122,7 @@ class Game {
 	 * @author INFM042 F___94 Stefan Lyudmilov Urumov
 	 * @author INFM042 F___77 Yosif Rumenov Enev
 	 */
-	int game_addTeam(Team team, Game game) {
+	static int game_addTeam(Team team, Game game) {
 		if (team == null)
 	        return Errors.ERROR_CODE.TEAM_NULL.getIndex();
 	    if (game == null)
@@ -268,7 +268,57 @@ class Game {
 	 * @author INFM042 F___33 Veselka Penkova Peycheva
 	 */
 	int game_updateScore(final Game game, Player bidWinner) {
-		return 0;
+		if ( game == null ) {
+			return Errors.ERROR_CODE.GAME_NULL.getIndex();
+			}
+	    	if ( bidWinner == null ) {
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+			}
+
+		Team bidWinnerTeam = game_findTeam( game, bidWinner );
+		int bidWinnerTeamId = -1;
+		int[] teamScores = new int[Constants.MAX_GAME_TEAMS];
+
+	    	for ( int i = 0; i < Constants.MAX_GAME_TEAMS; i ++ ) {
+			teamScores[i] = 0;
+	    		if ( game.teams[i] == bidWinnerTeam ) {
+				bidWinnerTeamId = i;
+				}
+			}
+
+	    	if ( bidWinnerTeamId == -1 || bidWinnerTeam == null ) {
+			return Errors.ERROR_CODE.NOT_FOUND.getIndex();
+			}
+
+	    	for ( int i = 0; i < Constants.MAX_GAME_PLAYERS; i ++ ) {
+	    		if ( game.round.players[i] != null ) {
+				Team team = game_findTeam( game, game.round.players[i] );
+	    			if ( team == null ) {
+					return Errors.ERROR_CODE.NOT_FOUND.getIndex();
+					}
+	    			for ( int j = 0; j < Constants.MAX_GAME_TEAMS; j ++ ) {
+	    				if ( game.teams[j] == team ) {
+						teamScores[j] += game.round.pointsNumber[i];
+						}
+					}
+				}
+			}
+
+		int bidWinnerId = Round.round_findPlayerIndexRound( bidWinner, game.round );
+	    	for ( int i = 0; i < Constants.MAX_GAME_TEAMS; i ++ ) {
+	    		if ( game.teams[i] != null ) {
+	    			if ( game.teams[i] != bidWinnerTeam ) {
+					game.teams[i].score += teamScores[ i ] / 33;
+					} else if ( game.round.bids[ bidWinnerId ] <= teamScores[ bidWinnerTeamId ] / 33 ) {
+					bidWinnerTeam.score += teamScores[ bidWinnerTeamId ] / 33;
+				} else {
+					bidWinnerTeam.score -= game.round.bids[ bidWinnerId ];
+				}
+				}
+			Team.team_updatePlayersScore(game.teams[i]);
+			}
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
