@@ -13,7 +13,26 @@ class Round {
 	 * @author INFM042 F___77 Yosif Rumenov Enev
 	 */
 	Round round_createRound() {
-		return (null);
+		  Round round = new Round();
+
+		    if (round == null)
+		        return null;
+
+		    for (int a = 0; a < Constants.MAX_HANDS; a++)
+		        round.hands[a] = null;
+
+		    for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+		        round.bids[i] = 0;
+		        round.players[i] = null;
+		    }
+
+		    round.trump = Suit.SuitEnd;
+
+		    for (int z = 0; z < Constants.MAX_GAME_PLAYERS; z++)
+		        round.pointsNumber[z] = 0;
+
+		    return round;
+		
 	}
 
 	/**
