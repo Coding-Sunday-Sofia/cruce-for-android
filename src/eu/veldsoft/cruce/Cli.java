@@ -212,9 +212,9 @@ class Cli {
 		for(int i=0; i  < Constants.MAX_GAME_PLAYERS; i++) {
 			if(game.players != null && i < game.players.length) { // validate if the players array is initialized with the correct length
 				Team team = new Team(); // initialize Team object with default constructor (this should not be needed if the team_createTeam method is static
-				team = team.team_createTeam(); // team_createTeam() should be marked as static
-				team.team_addPlayer(team, game.players[i]);
-				game.game_addTeam(team, game);
+				team = Team.team_createTeam(); // team_createTeam() should be marked as static
+				Team.team_addPlayer(team, game.players[i]);
+				Game.game_addTeam(team, game);
 			}
 		}
 	}
