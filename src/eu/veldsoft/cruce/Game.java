@@ -42,16 +42,16 @@ class Game {
 	 * @author INFM032 F___25 Kalina Zhivkova Momkova
 	 */
 	int game_deleteGame(Game game) {
-		
+
 		// check whether the game is already deleted
 		if (game == null) {
-	        return Errors.ERROR_CODE.GAME_NULL.getIndex();
+			return Errors.ERROR_CODE.GAME_NULL.getIndex();
 		}
 
-	    // delete game
-	    game = null;
+		// delete game
+		game = null;
 
-	    return Errors.ERROR_CODE.NO_ERROR.getIndex();
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
@@ -60,32 +60,42 @@ class Game {
 	 * @author INFM042 F___21 Trifon Zhivkov Trifonov
 	 */
 	int game_addPlayer(Player player, Game game) {
-		if(player == null) {
+		if (player == null) {
 			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
 		}
-		
-		if(game == null) {
+
+		if (game == null) {
 			return Errors.ERROR_CODE.GAME_NULL.getIndex();
 		}
-		
-		for(int i=0; i<Constants.MAX_GAME_PLAYERS; i++) { // run validation for already existing player
-			if(game.players != null && i < game.players.length && game.players[i].equals(player)) { // Player.java must override equals method
+
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) { // run validation
+																// for already
+																// existing
+																// player
+			if (game.players != null && i < game.players.length
+					&& game.players[i].equals(player)) { // Player.java must
+															// override equals
+															// method
 				return Errors.ERROR_CODE.DUPLICATE.getIndex();
 			}
-			
-			if(game.players != null && i < game.players.length && game.players[i].name.equals(player.name)) {
+
+			if (game.players != null && i < game.players.length
+					&& game.players[i].name.equals(player.name)) {
 				return Errors.ERROR_CODE.DUPLICATE_NAME.getIndex();
 			}
 		}
-		
-		for(int i=0; i<Constants.MAX_GAME_PLAYERS; i++) { // find empty slot and put the player there
-			if(game.players[i] == null) {
+
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) { // find empty
+																// slot and put
+																// the player
+																// there
+			if (game.players[i] == null) {
 				game.players[i] = player;
 				game.numberPlayers++;
 				return Errors.ERROR_CODE.NO_ERROR.getIndex();
 			}
 		}
-		
+
 		return Errors.ERROR_CODE.FULL.getIndex();
 	}
 
@@ -97,22 +107,22 @@ class Game {
 	 * @author INFM042 F___30 Kristina Ivanova Dineva
 	 */
 	int game_removePlayer(final Player player, Game game) {
-		 if (player == null)
-		        return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
-		    if (game == null)
-		        return Errors.ERROR_CODE.GAME_NULL.getIndex();
+		if (player == null)
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		if (game == null)
+			return Errors.ERROR_CODE.GAME_NULL.getIndex();
 
-		    int i = 0;
-		    while (i < Constants.MAX_GAME_PLAYERS && game.players[i] != player)
-		        i++;
+		int i = 0;
+		while (i < Constants.MAX_GAME_PLAYERS && game.players[i] != player)
+			i++;
 
-		    if (i == Constants.MAX_GAME_PLAYERS)
-		        return Errors.ERROR_CODE.NOT_FOUND.getIndex();
+		if (i == Constants.MAX_GAME_PLAYERS)
+			return Errors.ERROR_CODE.NOT_FOUND.getIndex();
 
-		    game.players[i] = null;
-		    game.numberPlayers--;
-		    
-		    return Errors.ERROR_CODE.NO_ERROR.getIndex();
+		game.players[i] = null;
+		game.numberPlayers--;
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
@@ -124,23 +134,23 @@ class Game {
 	 */
 	static int game_addTeam(Team team, Game game) {
 		if (team == null)
-	        return Errors.ERROR_CODE.TEAM_NULL.getIndex();
-	    if (game == null)
-	        return Errors.ERROR_CODE.GAME_NULL.getIndex();
+			return Errors.ERROR_CODE.TEAM_NULL.getIndex();
+		if (game == null)
+			return Errors.ERROR_CODE.GAME_NULL.getIndex();
 
-	    for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
-	        if (game.teams[i] == team)
-	            return Errors.ERROR_CODE.DUPLICATE.getIndex();
-	    }
+		for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
+			if (game.teams[i] == team)
+				return Errors.ERROR_CODE.DUPLICATE.getIndex();
+		}
 
-	    for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
-	        if (game.teams[i] == null) {
-	            game.teams[i] = team;
-	            return Errors.ERROR_CODE.NO_ERROR.getIndex();
-	        }
-	    }
+		for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
+			if (game.teams[i] == null) {
+				game.teams[i] = team;
+				return Errors.ERROR_CODE.NO_ERROR.getIndex();
+			}
+		}
 
-	    return Errors.ERROR_CODE.FULL.getIndex();
+		return Errors.ERROR_CODE.FULL.getIndex();
 	}
 
 	/**
@@ -268,55 +278,56 @@ class Game {
 	 * @author INFM042 F___33 Veselka Penkova Peycheva
 	 */
 	int game_updateScore(final Game game, Player bidWinner) {
-		if ( game == null ) {
+		if (game == null) {
 			return Errors.ERROR_CODE.GAME_NULL.getIndex();
-			}
-	    	if ( bidWinner == null ) {
+		}
+		if (bidWinner == null) {
 			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
-			}
+		}
 
-		Team bidWinnerTeam = game_findTeam( game, bidWinner );
+		Team bidWinnerTeam = game_findTeam(game, bidWinner);
 		int bidWinnerTeamId = -1;
 		int[] teamScores = new int[Constants.MAX_GAME_TEAMS];
 
-	    	for ( int i = 0; i < Constants.MAX_GAME_TEAMS; i ++ ) {
+		for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
 			teamScores[i] = 0;
-	    		if ( game.teams[i] == bidWinnerTeam ) {
+			if (game.teams[i] == bidWinnerTeam) {
 				bidWinnerTeamId = i;
-				}
 			}
+		}
 
-	    	if ( bidWinnerTeamId == -1 || bidWinnerTeam == null ) {
+		if (bidWinnerTeamId == -1 || bidWinnerTeam == null) {
 			return Errors.ERROR_CODE.NOT_FOUND.getIndex();
-			}
+		}
 
-	    	for ( int i = 0; i < Constants.MAX_GAME_PLAYERS; i ++ ) {
-	    		if ( game.round.players[i] != null ) {
-				Team team = game_findTeam( game, game.round.players[i] );
-	    			if ( team == null ) {
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+			if (game.round.players[i] != null) {
+				Team team = game_findTeam(game, game.round.players[i]);
+				if (team == null) {
 					return Errors.ERROR_CODE.NOT_FOUND.getIndex();
-					}
-	    			for ( int j = 0; j < Constants.MAX_GAME_TEAMS; j ++ ) {
-	    				if ( game.teams[j] == team ) {
+				}
+				for (int j = 0; j < Constants.MAX_GAME_TEAMS; j++) {
+					if (game.teams[j] == team) {
 						teamScores[j] += game.round.pointsNumber[i];
-						}
 					}
 				}
 			}
+		}
 
-		int bidWinnerId = Round.round_findPlayerIndexRound( bidWinner, game.round );
-	    	for ( int i = 0; i < Constants.MAX_GAME_TEAMS; i ++ ) {
-	    		if ( game.teams[i] != null ) {
-	    			if ( game.teams[i] != bidWinnerTeam ) {
-					game.teams[i].score += teamScores[ i ] / 33;
-					} else if ( game.round.bids[ bidWinnerId ] <= teamScores[ bidWinnerTeamId ] / 33 ) {
-					bidWinnerTeam.score += teamScores[ bidWinnerTeamId ] / 33;
+		int bidWinnerId = Round.round_findPlayerIndexRound(bidWinner,
+				game.round);
+		for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
+			if (game.teams[i] != null) {
+				if (game.teams[i] != bidWinnerTeam) {
+					game.teams[i].score += teamScores[i] / 33;
+				} else if (game.round.bids[bidWinnerId] <= teamScores[bidWinnerTeamId] / 33) {
+					bidWinnerTeam.score += teamScores[bidWinnerTeamId] / 33;
 				} else {
-					bidWinnerTeam.score -= game.round.bids[ bidWinnerId ];
+					bidWinnerTeam.score -= game.round.bids[bidWinnerId];
 				}
-				}
-			Team.team_updatePlayersScore(game.teams[i]);
 			}
+			Team.team_updatePlayersScore(game.teams[i]);
+		}
 
 		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
