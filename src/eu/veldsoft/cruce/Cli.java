@@ -11,8 +11,6 @@ class Cli {
 
 	final int SLEEP_TIME = 2;
 
-	// private static final boolean DEBUG = false;
-
 	void welcomeMessage() {
 	}
 
@@ -209,10 +207,21 @@ class Cli {
 	 * @author INFM032 F___94 Stefan Lyudmilov Urumov
 	 */
 	void createEmptyTeams(Game game) {
-		for(int i=0; i  < Constants.MAX_GAME_PLAYERS; i++) {
-			if(game.players != null && i < game.players.length) { // validate if the players array is initialized with the correct length
-				Team team = new Team(); // initialize Team object with default constructor (this should not be needed if the team_createTeam method is static
-				team = Team.team_createTeam(); // team_createTeam() should be marked as static
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+			if (game.players != null && i < game.players.length) { // validate
+																	// if the
+																	// players
+																	// array is
+																	// initialized
+																	// with the
+																	// correct
+																	// length
+				Team team = new Team(); // initialize Team object with default
+										// constructor (this should not be
+										// needed if the team_createTeam method
+										// is static
+				team = Team.team_createTeam(); // team_createTeam() should be
+												// marked as static
 				Team.team_addPlayer(team, game.players[i]);
 				Game.game_addTeam(team, game);
 			}
@@ -225,66 +234,67 @@ class Cli {
 	 * @author INFM032 F___06 Milen Tsvetanov Pankov
 	 */
 	int formTeams(Game game) {
-		if(game == null) {
+		if (game == null) {
 			return Errors.ERROR_CODE.GAME_NULL.getIndex();
 		}
-		
-		if(game.numberPlayers == 0) {
+
+		if (game.numberPlayers == 0) {
 			return Errors.ERROR_CODE.GAME_EMPTY.getIndex();
 		}
-		
-		if(game.numberPlayers == 1) {
+
+		if (game.numberPlayers == 1) {
 			return Errors.ERROR_CODE.INSUFFICIENT_PLAYERS.getIndex();
 		}
-		
-		if(game.numberPlayers < 4) {
+
+		if (game.numberPlayers < 4) {
 			createEmptyTeams(game);
 			return Errors.ERROR_CODE.NO_ERROR.getIndex();
 		}
-		
+
 		System.out.print("Do you want to play on teams? (Y/n) ");
 		Scanner scanner = new Scanner(System.in);
 		String answer = scanner.nextLine();
 		System.out.println(""); // add new line for better readability
-		
-		if(answer == null || answer.equalsIgnoreCase("n")) {
+
+		if (answer == null || answer.equalsIgnoreCase("n")) {
 			createEmptyTeams(game);
 			return Errors.ERROR_CODE.NO_ERROR.getIndex();
 		}
-		
-		System.out.print("Player 1 (" + game.players[0].name + "): Please insert your teammate's id: ");
+
+		System.out.print("Player 1 (" + game.players[0].name
+				+ "): Please insert your teammate's id: ");
 		int playerId = 0;
-		
-		while(playerId < 2 || playerId > 4) {
+
+		while (playerId < 2 || playerId > 4) {
 			answer = scanner.nextLine();
-		
+
 			try {
 				playerId = Integer.valueOf(answer);
-			} catch(NumberFormatException nfe) { // incorrect digit entered
-				playerId = 0; 
+			} catch (NumberFormatException nfe) { // incorrect digit entered
+				playerId = 0;
 			}
-			
-			if(playerId < 2 || playerId > 4) {
+
+			if (playerId < 2 || playerId > 4) {
 				System.out.print("\nPlease insert a correct player id. ");
 			}
 		}
-	
+
 		System.out.println(""); // empty line
-		
+
 		playerId--;
-		
+
 		Player backup = game.players[1];
 		game.players[1] = game.players[playerId];
 		game.players[playerId] = backup;
-		
-		for(int i=0; i<2; i++) {
+
+		for (int i = 0; i < 2; i++) {
 			Team team = new Team();
 			team = team.team_createTeam(); // should be static
-			team.team_addPlayer(team, game.players[2*i]);
-			team.team_addPlayer(team, game.players[2*i + 1]);
+			team.team_addPlayer(team, game.players[2 * i]);
+			team.team_addPlayer(team, game.players[2 * i + 1]);
 			game.game_addTeam(team, game);
 		}
-		
+
 		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
@@ -321,11 +331,26 @@ class Cli {
 	 * @author INFM042 F___29 Diana Ilieva Dyulgerova
 	 */
 	int processingScore(final String score) {
-		return (0);
+		if (Constants.DEBUG) {
+			return Integer.valueOf(score);
+		} else {
+			if ("11".equals(score) == true)
+				return 11;
+			if ("15".equals(score) == true)
+				return 15;
+			if ("21".equals(score) == true)
+				return 21;
+			if ("q".equals(score) == true) {
+				Globals.endwin();
+				System.exit(0);
+			}
+
+			return -1;
+		}
 	}
 
 	/**
-	 * @return 
+	 * @return
 	 * 
 	 * @author INFM042 F___62 Viktor Georgiev Petrov
 	 * @author INFM042 F___25 Kalina Zhivkova Momkova
@@ -334,20 +359,20 @@ class Cli {
 	int getScoreLimit() {
 		String score = "";
 
-	    do{
-	        Globals.printw("Insert the score limit (11-15-21): ");
-	        Globals.scanw("%s", score);
-	    } while(score.length() == 0);
+		do {
+			Globals.printw("Insert the score limit (11-15-21): ");
+			Globals.scanw("%s", score);
+		} while (score.length() == 0);
 
-	    while (processingScore(score) == -1) {
-	    	Globals.printw("Insert the correct score limit (11-15-21): ");
-	    	Globals.scanw("%s", score);
-	    }
-	    
-	    Globals.printw("\n");
+		while (processingScore(score) == -1) {
+			Globals.printw("Insert the correct score limit (11-15-21): ");
+			Globals.scanw("%s", score);
+		}
 
-	    return processingScore(score);
-	 }
+		Globals.printw("\n");
+
+		return processingScore(score);
+	}
 
 	/**
 	 * @author INFM042 F___25 Kalina Zhivkova Momkova

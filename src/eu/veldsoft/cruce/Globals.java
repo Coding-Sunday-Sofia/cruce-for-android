@@ -23,4 +23,7 @@ public class Globals {
 	public static void printw(String string1, String string2) {
 	}
 
+	public static void endwin() {
+	}
+
 }
