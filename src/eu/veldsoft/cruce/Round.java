@@ -13,26 +13,26 @@ class Round {
 	 * @author INFM042 F___77 Yosif Rumenov Enev
 	 */
 	Round round_createRound() {
-		  Round round = new Round();
+		Round round = new Round();
 
-		    if (round == null)
-		        return null;
+		if (round == null)
+			return null;
 
-		    for (int a = 0; a < Constants.MAX_HANDS; a++)
-		        round.hands[a] = null;
+		for (int a = 0; a < Constants.MAX_HANDS; a++)
+			round.hands[a] = null;
 
-		    for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
-		        round.bids[i] = 0;
-		        round.players[i] = null;
-		    }
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+			round.bids[i] = 0;
+			round.players[i] = null;
+		}
 
-		    round.trump = Suit.SuitEnd;
+		round.trump = Suit.SuitEnd;
 
-		    for (int z = 0; z < Constants.MAX_GAME_PLAYERS; z++)
-		        round.pointsNumber[z] = 0;
+		for (int z = 0; z < Constants.MAX_GAME_PLAYERS; z++)
+			round.pointsNumber[z] = 0;
 
-		    return round;
-		
+		return round;
+
 	}
 
 	/**
@@ -106,34 +106,34 @@ class Round {
 	 * @author INFM042 F___80 Goritsa Ivanova Yanakieva
 	 */
 	int round_placeBid(final Player player, final int bid, Round round) {
-		if(player == null) {
+		if (player == null) {
 			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
 		}
-		
-		if(round == null) {
+
+		if (round == null) {
 			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
 		}
-		
-		if(bid < 0 || bid > 6) {
+
+		if (bid < 0 || bid > 6) {
 			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
 		}
 
-		if(bid > 0) {
-			for(int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
-				if(round.bids[i] > bid) {
+		if (bid > 0) {
+			for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+				if (round.bids[i] > bid) {
 					return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
 				}
 			}
 		}
-		
+
 		int index = round.round_findPlayerIndexRound(player, round);
-		
-		if(index < 0) {
+
+		if (index < 0) {
 			return Errors.ERROR_CODE.NOT_FOUND.getIndex();
 		}
-		
+
 		round.bids[index] = bid;
-		
+
 		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
@@ -291,14 +291,22 @@ class Round {
 	}
 
 	/**
+	 * @param round
+	 * @param currentBid
+	 * 
+	 * @return
+	 * 
+	 * @author Todor Balabanov
 	 */
 	int round_findNextAllowedBid(Round round, int currentBid) {
-		return (0);
+		return findAllowedBid(round, currentBid, 1);
 	}
 
+	
 	/**
 	 */
 	int round_findPreviousAllowedBid(Round round, int currentBid) {
+		//TODO Georgi
 		return (0);
 	}
 }

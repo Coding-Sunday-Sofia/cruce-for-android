@@ -1,7 +1,7 @@
 package eu.veldsoft.cruce;
 
 public class Globals {
-	
+
 	private Globals() {
 	}
 
