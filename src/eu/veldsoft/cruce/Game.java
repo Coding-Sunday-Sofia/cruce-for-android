@@ -314,8 +314,7 @@ class Game {
 			}
 		}
 
-		int bidWinnerId = Round.round_findPlayerIndexRound(bidWinner,
-				game.round);
+		int bidWinnerId = Round.round_findPlayerIndexRound(bidWinner,game.round);
 		for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
 			if (game.teams[i] != null) {
 				if (game.teams[i] != bidWinnerTeam) {

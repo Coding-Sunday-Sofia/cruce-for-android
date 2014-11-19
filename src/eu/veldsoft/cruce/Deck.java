@@ -131,7 +131,8 @@ class Deck {
 	 * @author INFM042 F___12 Nikolay Todorov Hristov
 	 * @author INFM042 F___75 Mihail Genov Knebel
 	 */
-	int deck_compareCards(final Card card1, final Card card2, final Suit trump) {
+	static int deck_compareCards(final Card card1, final Card card2,
+			final Suit trump) {
 		return (0);
 	}
 

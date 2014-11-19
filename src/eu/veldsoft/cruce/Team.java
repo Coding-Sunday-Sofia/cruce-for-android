@@ -123,7 +123,7 @@ class Team {
 	 * 
 	 * @author Alexandar Jelin
 	 * @email aleksandarjelin@gmail.com
-	 * @date 6 november 2014
+	 * @date 06 Nov 2014
 	 */
 	int team_removePlayer(Team team, final Player player) {
 		if (team == null) {
@@ -150,7 +150,7 @@ class Team {
 	 * 
 	 * @author Alexandar Jelin
 	 * @email aleksandarjelin@gmail.com
-	 * @date 6 november 2014
+	 * @date 06 Nov 2014
 	 */
 	int team_deleteTeam(Team team) {
 		if (team == null) {
@@ -184,14 +184,15 @@ class Team {
 	/**
 	 * The function add card in player hand.
 	 * 
-	 * @return FULL
+	 * @return Error if the player and card are null.Return no error if they are
+	 *         not null.
 	 * 
 	 * @authors Vencislav Medarov
 	 * @email venci932@gmail.com
 	 * @date 06 Nov 2014
 	 * 
 	 */
-	int team_addCard(Player player, Card card) {
+	static int team_addCard(Player player, Card card) {
 		if (player == null) {
 			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
 		}
@@ -216,11 +217,29 @@ class Team {
 		return (Errors.ERROR_CODE.FULL.getIndex());
 	}
 
-	// TODO To be done by Yani.
 	/**
+	 * The function check if the player has cards.
+	 * 
+	 * @param player
+	 * 
+	 * @return null
+	 * 
+	 * @authors Yani Tonev
+	 * @email k_o_r_g@abv.bg
+	 * @date 15 Nov 2014
+	 * 
 	 */
 	int team_hasCards(final Player player) {
-		return (0);
+		if (player == null) {
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		}
+		for (int i = 0; i < Constants.MAX_CARDS; i++) {
+			if (player.hand[i] != null) {
+				return 1;
+			}
+		}
+
+		return 0;
 	}
 
 	/**
@@ -232,7 +251,7 @@ class Team {
 	 * 
 	 * @author Alexandar Jelin
 	 * @email aleksandarjelin@gmail.com
-	 * @date 6 november 2014
+	 * @date 06 Nov 2014
 	 */
 	static int team_updatePlayersScore(Team team) {
 		if (team == null) {

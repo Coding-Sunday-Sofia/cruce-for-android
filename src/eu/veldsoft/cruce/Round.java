@@ -1,5 +1,7 @@
 package eu.veldsoft.cruce;
 
+import eu.veldsoft.cruce.Team;
+
 class Round {
 	Suit trump;
 	Hand hands[] = new Hand[Constants.MAX_HANDS];
@@ -37,8 +39,10 @@ class Round {
 
 	/**
 	 * @param round
-	 *            - reference to the round to be deleted
-	 * @return - error code
+	 *            reference to the round to be deleted
+	 * 
+	 * @return error code
+	 * 
 	 * @author INFM042 F___76 Venelin Lyulinov Lozanov
 	 * @author INFM042 F___04 Petar Aleksandrov Vorotnikov
 	 * @author INFM042 F___83 Gabriel Valentinov Grigorov
@@ -139,10 +143,13 @@ class Round {
 
 	/**
 	 * @param player
-	 *            - reference to the player to be added in the round
+	 *            reference to the player to be added in the round
+	 * 
 	 * @param round
-	 *            - reference to the round where the player will be added
-	 * @return - error code
+	 *            reference to the round where the player will be added
+	 * 
+	 * @return error code
+	 * 
 	 * @author INFM032 F___76 Venelin Lyulinov Lozanov
 	 * @author INFM042 F___04 Petar Aleksandrov Vorotnikov
 	 * @author INFM042 F___80 Goritsa Ivanova Yanakieva
@@ -218,95 +225,515 @@ class Round {
 	}
 
 	/**
+	 * The function remove player in a game.
+	 * 
+	 * @param player
+	 * @param round
+	 * 
+	 * @return int
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 10 Nov 2014
 	 */
 	int round_removePlayer(final Player player, Round round) {
-		return (0);
+		if (player == null) {
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		}
+		if (round == null) {
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+		}
+
+		int index = round_findPlayerIndexRound(player, round);
+
+		if (index < 0) {
+			return Errors.ERROR_CODE.NOT_FOUND.getIndex();
+		}
+
+		round.players[index] = null;
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
+	 * The function remove Player's hand of cards.
+	 * 
+	 * @param player
+	 * @param hand
+	 * 
+	 * @return int
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 10 Nov 2014
 	 */
 	int round_removePlayerHand(final Player player, Hand hand) {
-		return (0);
+		if (player == null) {
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		}
+		if (hand == null) {
+			return Errors.ERROR_CODE.NOT_FOUND.getIndex();
+		}
+
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+			if (hand.players[i] == player) {
+				hand.players[i] = null;
+				return Errors.ERROR_CODE.NO_ERROR.getIndex();
+			}
+		}
+
+		return Errors.ERROR_CODE.NOT_FOUND.getIndex();
 	}
 
 	/**
+	 * 
+	 * 
+	 * @param player
+	 * @param cardId
+	 * @param handId
+	 * @param round
+	 * 
+	 * @return int
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 10 Nov 2014
 	 */
 	int round_putCard(Player player, final int cardId, final int handId,
 			Round round) {
-		return (0);
+
+		if (player == null) {
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		}
+		if (player.hand[cardId] == null) {
+			return Errors.ERROR_CODE.CARD_NULL.getIndex();
+		}
+		if (round == null) {
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+		}
+		if (round.hands[handId] == null) {
+			return Errors.ERROR_CODE.HAND_NULL.getIndex();
+		}
+
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+			if (round.hands[handId].players[i] == player) {
+				round.hands[handId].cards[i] = player.hand[cardId];
+				Suit suit = player.hand[cardId].suit;
+				int value = player.hand[cardId].value;
+				player.hand[cardId] = null;
+				if (i == 0 && (value == 3 || value == 4)) {
+					int check = 0;
+					for (int j = 0; j < Constants.MAX_CARDS; j++) {
+						if (player.hand[j] != null
+								&& (player.hand[j].value == 3 || player.hand[j].value == 4)
+								&& suit == player.hand[j].suit) {
+							check = 1;
+						}
+					}
+					if (check == 1) {
+						int position = round_findPlayerIndexRound(player, round);
+						if (suit == round.trump) {
+							round.pointsNumber[position] += 40;
+						} else {
+							round.pointsNumber[position] += 20;
+						}
+					}
+				}
+
+				return Errors.ERROR_CODE.NO_ERROR.getIndex();
+			}
+		}
+
+		return Errors.ERROR_CODE.NOT_FOUND.getIndex();
 	}
 
 	/**
+	 * The function calculate points in a Player's hand of cards.
+	 * 
+	 * @param hand
+	 *            The hand where to compute the number of points.
+	 * 
+	 * @return The number of points in hand on succes, negative otherwise.
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 17 Nov 2014
+	 * 
 	 */
 	int totalPointsNumber(final Hand hand) {
-		return (0);
+		if (hand == null) {
+			return Errors.ERROR_CODE.HAND_NULL.getIndex();
+		}
+		int points = 0;
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+			if (hand.players[i] != null && hand.cards[i] != null) {
+				points += hand.cards[i].value;
+			}
+		}
+		return points;
 	}
 
 	/**
+	 * The funciton show player who is win the round.
+	 * 
+	 * @param hand
+	 * @param round
+	 * 
+	 * @return Player
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 17 Nov 2014
+	 * 
 	 */
 	Player round_handWinner(final Hand hand, Round round) {
-		return (null);
+		if (hand == null || round == null || round.trump == Suit.SuitEnd) {
+			return null;
+		}
+
+		Suit trump = round.trump;
+		int playerWinner = -1;
+		int numberPlayers = 0;
+
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+			if ((hand.players[i] != null && hand.cards[i] == null)
+					|| (hand.players[i] == null && hand.cards[i] != null)) {
+				return null;
+			}
+
+			if (hand.players[i] != null && hand.cards[i] != null) {
+				numberPlayers++;
+				if (playerWinner == -1) {
+					playerWinner = i;
+				}
+			}
+		}
+
+		if (playerWinner == -1 || numberPlayers == 1) {
+			return null;
+		}
+		int cardWinner;
+
+		for (int i = playerWinner + 1; i < Constants.MAX_GAME_PLAYERS; i++) {
+			if (hand.players[i] != null && hand.cards[i] != null) {
+				cardWinner = Deck.deck_compareCards(hand.cards[playerWinner],
+						hand.cards[i], trump);
+
+				if (cardWinner == 2) {
+					playerWinner = i;
+				}
+				if (cardWinner <= 0) {
+					return null;
+				}
+			}
+		}
+		int playerWinner_inRound = round_findPlayerIndexRound(
+				hand.players[playerWinner], round);
+		round.pointsNumber[playerWinner_inRound] += totalPointsNumber(hand);
+		return hand.players[playerWinner];
 	}
 
 	/**
+	 * The method distribute a card.
+	 * 
+	 * @param deck
+	 * @param round
+	 * 
+	 * @return Error message.
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 17 Nov 2014
+	 * 
 	 */
 	int round_distributeCard(Deck deck, final Round round) {
-		return (0);
+		if (deck == null) {
+			return Errors.ERROR_CODE.DECK_NULL.getIndex();
+		}
+		if (round == null) {
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+		}
+
+		int i, j;
+		int distributedCards = 0;
+
+		for (i = 0, j = 0; i < Constants.MAX_GAME_PLAYERS
+				&& j < Constants.DECK_SIZE; i++, j++) {
+			// do not change while's order
+
+			while (deck.cards[j] == null && j < Constants.DECK_SIZE) {
+				j++;
+			}
+			while (round.players[i] == null && i < Constants.MAX_GAME_PLAYERS) {
+				i++;
+			}
+
+			if (i < Constants.MAX_GAME_PLAYERS && j < Constants.DECK_SIZE) {
+				int checkError = Team.team_addCard(round.players[i],
+						deck.cards[j]);
+				if (checkError != Errors.ERROR_CODE.NO_ERROR.getIndex()) {
+					return checkError;
+				}
+				deck.cards[j] = null;
+				distributedCards++;
+			}
+		}
+
+		if (distributedCards == 0 && j == Constants.DECK_SIZE + 1) {
+			return Errors.ERROR_CODE.DECK_EMPTY.getIndex();
+		}
+		if (distributedCards == 0 && i == Constants.MAX_GAME_PLAYERS + 1) {
+			return Errors.ERROR_CODE.ROUND_EMPTY.getIndex();
+		}
+		if (distributedCards == 1 && i == Constants.MAX_GAME_PLAYERS + 1) {
+			return Errors.ERROR_CODE.INSUFFICIENT_PLAYERS.getIndex();
+		}
+		if (distributedCards == 1 && j == Constants.DECK_SIZE + 1) {
+			return Errors.ERROR_CODE.LESS_CARDS.getIndex();
+		}
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
+	 * The function distribute deck.
+	 * 
+	 * @param deck
+	 * @param round
+	 * 
+	 * @return int
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 17 Nov 2014
+	 * 
 	 */
 	int round_distributeDeck(Deck deck, final Round round) {
-		return (0);
+		if (deck == null) {
+			return Errors.ERROR_CODE.DECK_NULL.getIndex();
+		}
+
+		if (round == null) {
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+		}
+
+		int numberPlayers = 0;
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+			if (round.players[i] != null) {
+				numberPlayers++;
+			}
+		}
+		if (numberPlayers == 1) {
+			return Errors.ERROR_CODE.INSUFFICIENT_PLAYERS.getIndex();
+		}
+		if (numberPlayers == 0) {
+			return Errors.ERROR_CODE.ROUND_EMPTY.getIndex();
+		}
+
+		for (int i = 0; i < Constants.MAX_CARDS
+				&& i < Constants.DECK_SIZE / numberPlayers; i++) {
+			int distributeCard = round_distributeCard(deck, round);
+			if (distributeCard != Errors.ERROR_CODE.NO_ERROR.getIndex()) {
+				return distributeCard;
+			}
+		}
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
-	 */
-	int round_arrangePlayersHand(Round round, int i) {
-		return (0);
-	}
-
-	/**
-	 */
-	int round_computePoints(final Team team, final Round round) {
-		return (0);
-	}
-
-	/**
-	 */
-	int round_getMaximumBid(Round round) {
-		return (0);
-	}
-
-	/**
-	 */
-	int checkBid(int currentBid, int maximumBid) {
-		return (0);
-	}
-
-	/**
-	 */
-	int findAllowedBid(Round round, int currentBid, int searchPattern) {
-		return (0);
-	}
-
-	/**
+	 * The function check is there hand, rounds or not.
+	 * 
 	 * @param round
-	 * @param currentBid
 	 * 
 	 * @return
 	 * 
-	 * @author Todor Balabanov
+	 * @authors Yani Tonev
+	 * @email k_o_r_g@abv.bg
+	 * @date 15 Nov 2014
+	 * 
+	 */
+	int round_arrangePlayersHand(Round round, int i) {
+
+		if (round == null)
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+		if (i < 0 || i >= Constants.MAX_GAME_PLAYERS)
+			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
+
+		int handId = 0;
+		while (round.hands[handId] != null)
+			handId++;
+
+		if (handId >= Constants.MAX_HANDS)
+			return Errors.ERROR_CODE.FULL.getIndex();
+
+		Hand hand = round_createHand();
+		for (int j = i; j < i + Constants.MAX_GAME_PLAYERS; j++)
+			if (round.players[j % Constants.MAX_GAME_PLAYERS] != null)
+				round_addPlayerHand(round.players[j
+						% Constants.MAX_GAME_PLAYERS], hand);
+
+		round.hands[handId] = hand;
+
+		return (Errors.ERROR_CODE.NO_ERROR.getIndex());
+	}
+
+	/**
+	 * The function check is there team_players, rounds or not and increment
+	 * points.
+	 * 
+	 * @param team
+	 *            , round
+	 * 
+	 * @return
+	 * 
+	 * @authors Yani Tonev
+	 * @email k_o_r_g@abv.bg
+	 * @date 17 Nov 2014
+	 * 
+	 */
+	int round_computePoints(final Team team, final Round round) {
+
+		if (team == null)
+			return Errors.ERROR_CODE.TEAM_NULL.getIndex();
+		if (round == null)
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+
+		int playersNumber = 0;
+		int points = 0;
+		for (int i = 0; i < Constants.MAX_TEAM_PLAYERS; i++)
+			if (team.players[i] != null) {
+				playersNumber++;
+				int j = round_findPlayerIndexRound(team.players[i], round);
+				if (j < 0)
+					return j;
+				points += round.pointsNumber[j];
+			}
+
+		if (playersNumber == 0)
+			return Errors.ERROR_CODE.TEAM_EMPTY.getIndex();
+
+		return points;
+	}
+
+	/**
+	 * The function check is there a round and return maximimBid.
+	 * 
+	 * @param round
+	 * 
+	 * @return maximimBid
+	 * 
+	 * @authors Yani Tonev
+	 * @email k_o_r_g@abv.bg
+	 * @date 17 Nov 2014
+	 */
+	int round_getMaximumBid(Round round) {
+		if (round == null)
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+
+		int maximumBid = 0;
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++)
+			if (round.players[i] != null)
+				if (round.bids[i] > maximumBid)
+					maximumBid = round.bids[i];
+
+		return maximumBid;
+	}
+
+	/**
+	 * The function check bid according to some conditions.
+	 * 
+	 * @param currentBid
+	 * @param maximumBid
+	 * 
+	 * @return 0 or 1 (number)
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 18 Nov 2014
+	 */
+	int checkBid(int currentBid, int maximumBid) {
+		if (currentBid > maximumBid || currentBid == 0) {
+			return 1;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * The function search allowed bid for a round.
+	 * 
+	 * @param round
+	 * @param currentBid
+	 * @param searchPattern
+	 * 
+	 * @return Error code (number) or current bid
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 18 Nov 2014
+	 */
+	int findAllowedBid(Round round, int currentBid, int searchPattern) {
+		if (round == null) {
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+		}
+		if (currentBid < 0 || currentBid > 6) {
+			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
+		}
+		if (searchPattern != 1 && searchPattern != -1) {
+			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
+		}
+
+		currentBid += searchPattern;
+		if (currentBid == -1) {
+			currentBid = 6;
+		}
+		if (currentBid == 7) {
+			currentBid = 0;
+		}
+
+		while (checkBid(currentBid, round_getMaximumBid(round)) == 1) {
+			currentBid += searchPattern;
+			if (currentBid == -1) {
+				currentBid = 6;
+			}
+			if (currentBid == 7) {
+				currentBid = 0;
+			}
+		}
+
+		return currentBid;
+	}
+
+	/**
+	 * The function search next allowed bid.
+	 * 
+	 * @param round
+	 * @param currentBid
+	 * 
+	 * @return int
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 18 Nov 2014
 	 */
 	int round_findNextAllowedBid(Round round, int currentBid) {
 		return findAllowedBid(round, currentBid, 1);
 	}
 
-	
 	/**
+	 * The method is created for find preveous allowed bid.
+	 * 
+	 * @param round
+	 * @param currentBid
+	 * 
+	 * @return int
+	 * 
+	 * @author Alexandar Jelin
+	 * @email aleksandarjelin@gmail.com
+	 * @date 18 Nov 2014
 	 */
 	int round_findPreviousAllowedBid(Round round, int currentBid) {
-		//TODO Georgi
-		return (0);
+		return findAllowedBid(round, currentBid, -1);
 	}
 }

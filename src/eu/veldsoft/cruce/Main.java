@@ -5,6 +5,7 @@ public class Main {
 
 	final String GAME_HELP_MANUAL = "";
 
+	// TODO To be done by Yani.
 	/**
 	 */
 	void cruceGameHelp() {
