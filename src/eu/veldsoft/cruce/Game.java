@@ -1,5 +1,5 @@
 package eu.veldsoft.cruce;
-
+	
 class Game {
 	int numberPlayers;
 	int pointsNumber;
