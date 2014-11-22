@@ -65,7 +65,17 @@ class Round {
 	 * @author INFM042 F___24 Rosen Ivanov Videv
 	 */
 	Hand round_createHand() {
-		return (null);
+		
+		Hand hand = new Hand();
+		
+		if (hand == null)
+			return null;
+		
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+			hand.cards[i] = null;
+			hand.players[i] = null;
+		}
+		return hand;
 	}
 
 	/**
@@ -83,7 +93,20 @@ class Round {
 	 * @author INFM032 F___05 Georgi Krumov Hristov
 	 */
 	Player round_getBidWinner(final Round round) {
-		return (null);
+		
+		if (round == null)
+			return null;
+		
+		int maxBidIndex = 0;
+		
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
+		
+			if (round.players[i] != null &&
+				round.bids[i] > round.bids[maxBidIndex]) {
+				maxBidIndex = i;
+			}
+		}
+			return round.players[maxBidIndex];
 	}
 
 	/**
