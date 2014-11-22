@@ -44,13 +44,12 @@ class Round {
 	 * @author INFM042 F___83 Gabriel Valentinov Grigorov
 	 */
 	int round_deleteRound(Round round) {
-		// Check whether the round is already null.
+		/*
+		 * Check whether the round is already null.
+		 */
 		if (round == null) {
 			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
 		}
-
-		// Delete round.
-		round = null;
 
 		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
@@ -302,11 +301,13 @@ class Round {
 		return findAllowedBid(round, currentBid, 1);
 	}
 
-	
 	/**
+	 * 
+	 * @param round
+	 * @param currentBid
+	 * @return
 	 */
 	int round_findPreviousAllowedBid(Round round, int currentBid) {
-		//TODO Georgi
-		return (0);
+		return findAllowedBid(round, currentBid, -1);
 	}
 }

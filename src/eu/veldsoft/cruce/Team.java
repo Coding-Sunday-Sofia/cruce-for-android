@@ -65,7 +65,7 @@ class Team {
 	static Team team_createTeam() {
 		Team newTeam = new Team();
 
-		if (newTeam == null) {
+		if (newTeam == null) { 
 			return null;
 		}
 
