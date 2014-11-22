@@ -236,26 +236,20 @@ class Cli {
 	}
 
 	/**
+	 * Create empty teams
+	 * 
+	 * @param game Current game reference.
+	 * validate if the players array is initialized with the correct length
+	 * 
 	 * @author INFM032 F___06 Milen Tsvetanov Pankov
 	 * @author INFM032 F___33 Veselka Penkova Peycheva
 	 * @author INFM032 F___94 Stefan Lyudmilov Urumov
 	 */
 	void createEmptyTeams(Game game) {
 		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
-			if (game.players != null && i < game.players.length) { // validate
-																	// if the
-																	// players
-																	// array is
-																	// initialized
-																	// with the
-																	// correct
-																	// length
-				Team team = new Team(); // initialize Team object with default
-										// constructor (this should not be
-										// needed if the team_createTeam method
-										// is static
-				team = Team.team_createTeam(); // team_createTeam() should be
-												// marked as static
+			if (game.players != null && i < game.players.length) {            // validate if the players array is initialized with the correct length
+				Team team = new Team();                                       // initialize Team object with default constructor (this should not be needed if the team_createTeam method is static
+				team = Team.team_createTeam();                                // team_createTeam() should be marked as static
 				Team.team_addPlayer(team, game.players[i]);
 				Game.game_addTeam(team, game);
 			}

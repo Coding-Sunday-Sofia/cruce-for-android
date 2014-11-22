@@ -75,6 +75,12 @@ class Deck {
 	}
 
 	/**
+	 * @brief Frees the memory of a deck and sets the pointer to NULL.
+	 *
+	 * @param deck Pointer to the pointer to be freed.
+	 *
+	 * @return NO_ERROR on success, other value on failure.
+	 * 
 	 * @author INFM042 F___33 Veselka Penkova Peycheva
 	 * @author INFM042 F___21 Mariya Asenova Shindarova
 	 * @author INFM032 F___75 Mihail Genov Knebel
@@ -135,6 +141,12 @@ class Deck {
 	}
 
 	/**
+	 * @brief The function counts the cards from deck.
+	 *
+	 * @param deck Pointer to the deck from which it counts.
+	 *
+	 * @return The cards number from deck.
+	 * 
 	 * @author INFM032 F___33 Veselka Penkova Peycheva
 	 * @author INFM042 F___29 Diana Ilieva Dyulgerova
 	 * @author INFM032 F___43 Stefan Mitkov Nenchev
