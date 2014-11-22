@@ -1,5 +1,5 @@
 package eu.veldsoft.cruce;
-	
+
 class Game {
 	int numberPlayers;
 	int pointsNumber;
@@ -194,7 +194,7 @@ class Game {
 	 * @author INFM042 F___80 Boris Kirilov Kafaliev
 	 * @author INFM042 F___24 Rosen Ivanov Videv
 	 */
-	int maximumValue(Card cards[], final int length, final Suit suit) {
+	static int maximumValue(Card cards[], final int length, final Suit suit) {
 
 		int maxValue = -1;
 		for (int i = 0; i < length; i++)
@@ -206,13 +206,65 @@ class Game {
 	}
 
 	/**
+	 * Function checks if the player can put a card down.
+	 * 
+	 * @param player
+	 *            The player who wants to put the card down.
+	 * @param game
+	 *            The game where the player is located.
+	 * @param hand
+	 *            The hand in which should put the card.
+	 * @param idCard
+	 *            The id of the card.
+	 *            
+	 * @return 1 if the player may to put the card down 0 if the player can't to
+	 *         put the card down other value on failure.
+	 *         
 	 * @author INFM042 F___29 Diana Ilieva Dyulgerova
 	 * @author INFM032 F___43 Stefan Mitkov Nenchev
 	 * @author INFM032 F___75 Mihail Genov Knebel
 	 */
-	int game_checkCard(Player player, final Game game, Hand hand,
+	static int game_checkCard(Player player, final Game game, Hand hand,
 			final int idCard) {
-		return (0);
+		if (player == null)
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		if (game == null)
+			return Errors.ERROR_CODE.GAME_NULL.getIndex();
+		if (hand == null)
+			return Errors.ERROR_CODE.HAND_NULL.getIndex();
+		if (game.numberPlayers == 0)
+			return Errors.ERROR_CODE.GAME_EMPTY.getIndex();
+		if (game.numberPlayers * Constants.MAX_CARDS > Constants.DECK_SIZE
+				&& (idCard < 0 || idCard > Constants.DECK_SIZE
+						/ game.numberPlayers - 1))
+			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
+		if (idCard < 0 || idCard > Constants.MAX_CARDS - 1)
+			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
+		if (player.hand[idCard] == null)
+			return Errors.ERROR_CODE.CARD_NULL.getIndex();
+		if (hand.cards[0] == null)
+			return 1;
+
+		int maxFirstCardValuePlayer = maximumValue(player.hand,
+				Constants.MAX_CARDS, hand.cards[0].suit);
+		int maxTrumpValuePlayer = maximumValue(player.hand,
+				Constants.MAX_CARDS, game.round.trump);
+		int maxFirstCardValue = maximumValue(hand.cards,
+				Constants.MAX_GAME_PLAYERS, hand.cards[0].suit);
+		int maxTrumpValue = maximumValue(hand.cards,
+				Constants.MAX_GAME_PLAYERS, game.round.trump);
+
+		Card chosenCard = player.hand[idCard];
+		Card firstCard = hand.cards[0];
+		Suit trump = game.round.trump;
+
+		if ((maxFirstCardValuePlayer == -1 && maxTrumpValuePlayer == -1)
+				|| (chosenCard.suit == firstCard.suit && (chosenCard.value > maxFirstCardValue
+						|| maxFirstCardValuePlayer < maxFirstCardValue || (maxTrumpValue > -1 && (firstCard.suit != trump || chosenCard.value > maxTrumpValue))))
+				|| (maxFirstCardValuePlayer == -1 && chosenCard.suit == trump && (chosenCard.value > maxTrumpValue || maxTrumpValue > maxTrumpValuePlayer)))
+			return 1;
+
+		return 0;
 	}
 
 	/**
@@ -314,7 +366,8 @@ class Game {
 			}
 		}
 
-		int bidWinnerId = Round.round_findPlayerIndexRound(bidWinner,game.round);
+		int bidWinnerId = Round.round_findPlayerIndexRound(bidWinner,
+				game.round);
 		for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
 			if (game.teams[i] != null) {
 				if (game.teams[i] != bidWinnerTeam) {

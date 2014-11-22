@@ -148,13 +148,47 @@ class Cli {
 	}
 
 	/**
+	 * Print player hand.
+	 * 
+	 * @param game Current game reference.
+	 * @param player Current player reference.
+	 * @param selected Selected card index.
+	 * @param win Terminal window reference.
+	 * 
+	 * @return Error code.
+	 * 
 	 * @author INFM042 F___94 Stefan Lyudmilov Urumov
 	 * @author INFM042 F___33 Veselka Penkova Peycheva
 	 * @author INFM032 F___29 Diana Ilieva Dyulgerova
 	 */
 	int printPlayerCards(final Game game, Player player, final int selected,
 			WINDOW win) {
-		return (0);
+		if (player == null)
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+		if (win == null)
+			return Errors.ERROR_CODE.POINTER_NULL.getIndex();
+		Globals.wprintw(win, "Your cards:\n");
+		int handId = 0;
+		while (game.round.hands[handId] != null) {
+			handId++;
+		}
+		if (handId > 0)
+			handId--;
+		for (int i = 0; i < Constants.MAX_CARDS; i++) {
+			if (player.hand[i] != null) {
+				if (Game.game_checkCard(player, game, game.round.hands[handId],
+						i) != 0) {
+					if (i == selected)
+						printCard(player.hand[i], 3, win);
+					else
+						printCard(player.hand[i], 7, win);
+				} else {
+					printCard(player.hand[i], 1, win);
+				}
+			}
+		}
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
