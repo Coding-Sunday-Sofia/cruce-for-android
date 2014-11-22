@@ -274,7 +274,37 @@ class Game {
 	 */
 	int findAllowedCard(final Player player, final Game game, Hand hand,
 			int currentCard, final int searchPattern) {
-		return (0);
+		if (player == null)
+			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
+			
+		if (game == null)
+			return Errors.ERROR_CODE.GAME_NULL.getIndex();
+			
+		if (hand == null)
+			return Errors.ERROR_CODE.HAND_NULL.getIndex();
+			
+		if (searchPattern != 1 && searchPattern != -1)
+			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
+			
+		if (game.numberPlayers * Constants.MAX_CARDS > Constants.DECK_SIZE &&
+			(currentCard < 0 || currentCard > Constants.DECK_SIZE / game.numberPlayers - 1))
+			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
+			
+		while (true) {
+			currentCard += searchPattern;
+			
+			if (currentCard < 0)
+				currentCard += Constants.MAX_CARDS;
+			
+			while (player.hand[currentCard % Constants.MAX_CARDS] == null && Math.abs(currentCard) <= 15)
+				currentCard += searchPattern;
+			
+			if (game_checkCard(player, game, hand, currentCard % Constants.MAX_CARDS) == 1)
+				return currentCard % Constants.MAX_CARDS;
+			
+			if (Math.abs(currentCard) > 15)
+				return Errors.ERROR_CODE.NOT_FOUND.getIndex();
+			}
 	}
 
 	/**
