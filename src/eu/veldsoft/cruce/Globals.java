@@ -26,4 +26,7 @@ public class Globals {
 	public static void endwin() {
 	}
 
+	public static void wprintw(WINDOW win, String string) {
+	}
+
 }
