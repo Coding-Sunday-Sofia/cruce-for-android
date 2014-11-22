@@ -32,11 +32,6 @@ class Deck {
 		return Card;
 	}
 
-	private eu.veldsoft.cruce.Card malloc(Card card) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	/**
 	 * @author INFM032 F___25 Kalina Zhivkova Momkova
 	 * @author INFM032 F___04 Petar Aleksandrov Vorotnikov
@@ -62,13 +57,16 @@ class Deck {
 	 */
 	Deck deck_createDeck() {
 		Deck deck = new Deck();
+		if (deck == null) {
+			return null;
+		}
 
 		int k = 0;
 		for (int i = 0; Suit.values()[i] != Suit.SuitEnd; i++) {
 			Suit suit = Suit.values()[i];
 			for (int j = 0; VALUES[j] != -1; j++) {
 				Card card = deck_createCard(suit, VALUES[j]);
-				this.cards[k] = card;
+				deck.cards[k] = card;
 				k++;
 			}
 		}
