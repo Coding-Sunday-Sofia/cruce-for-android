@@ -154,6 +154,13 @@ class Game {
 	}
 
 	/**
+	 * @brief Removes a team from a game.
+	 *
+	 * @param team The team to be removed.
+	 * @param game The game from where the team is to be removed.
+	 *
+	 * @return  NO_ERROR on success, error code otherwise.
+	 * 
 	 * @author INFM032 F___24 Rosen Ivanov Videv
 	 * @author INFM042 F___12 Nikolay Todorov Hristov
 	 * @author INFM032 F___33 Veselka Penkova Peycheva
@@ -355,6 +362,13 @@ class Game {
 	}
 
 	/**
+	 * @brief Function to update the score of teams and players after a round.
+	 *
+	 * @param game Game where to update the scores.
+	 * @param bidWinner Pointer to the player that won the bid in the last round.
+	 *
+	 * @return NO_ERROR or 0 on success, other value on failure.
+	 * 
 	 * @author INFM032 F___30 Kristina Ivanova Dineva
 	 * @author INFM032 F___21 Mariya Asenova Shindarova
 	 * @author INFM042 F___33 Veselka Penkova Peycheva
