@@ -29,4 +29,22 @@ public class Globals {
 	public static void wprintw(WINDOW win, String string) {
 	}
 
+	public static void wprintw(WINDOW win, String string, char[] downRightBox) {	
+	}
+
+	public static void wmove(WINDOW win, int i, int x) {	
+	}
+
+	public static void wprintw(WINDOW win, String string, char[] verticalBox, String name) {	
+	}
+
+	public static void wprintw(WINDOW win, String string, int i, int round_computePoints) {
+	}
+
+	public static void wrefresh(WINDOW win) {	
+	}
+
+	public static void wprintw(WINDOW win, String string, char[] verticalBox, char[] verticalBox2) {	
+	}
+
 }

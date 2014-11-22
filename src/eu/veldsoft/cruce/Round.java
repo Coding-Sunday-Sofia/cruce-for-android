@@ -267,7 +267,7 @@ class Round {
 
 	/**
 	 */
-	int round_computePoints(final Team team, final Round round) {
+	static int round_computePoints(final Team team, final Round round) {
 		return (0);
 	}
 
