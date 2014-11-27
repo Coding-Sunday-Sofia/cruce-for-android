@@ -150,10 +150,14 @@ class Cli {
 	/**
 	 * Print player hand.
 	 * 
-	 * @param game Current game reference.
-	 * @param player Current player reference.
-	 * @param selected Selected card index.
-	 * @param win Terminal window reference.
+	 * @param game
+	 *            Current game reference.
+	 * @param player
+	 *            Current player reference.
+	 * @param selected
+	 *            Selected card index.
+	 * @param win
+	 *            Terminal window reference.
 	 * 
 	 * @return Error code.
 	 * 
@@ -233,134 +237,138 @@ class Cli {
 	 */
 	int printScore(final Game game, final Round round, WINDOW win) {
 		if (game == null)
-	        return Errors.ERROR_CODE.GAME_NULL.getIndex();
-	    if (round == null)
-	        return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+			return Errors.ERROR_CODE.GAME_NULL.getIndex();
+		if (round == null)
+			return Errors.ERROR_CODE.ROUND_NULL.getIndex();
 
-	    char verticalBox[]           = {0xe2, 0x94, 0x82, 0x00};
-	    char horizontalBox[]         = {0xe2, 0x94, 0x80, 0x00};
-	    char downRightBox[]          = {0xe2, 0x94, 0x8c, 0x00};
-	    char downLeftBox[]           = {0xe2, 0x94, 0x90, 0x00};
-	    char upRightBox[]            = {0xe2, 0x94, 0x94, 0x00};
-	    char upLeftBox[]             = {0xe2, 0x94, 0x98, 0x00};
-	    char downHorizontalBox[]     = {0xe2, 0x94, 0xac, 0x00};
-	    char upHorizontalBox[]       = {0xe2, 0x94, 0xb4, 0x00};
-	    char verticalHorizontalBox[] = {0xe2, 0x94, 0xbc, 0x00};
-	    char verticalRightBox[]      = {0xe2, 0x94, 0x9c, 0x00};
-	    char verticalLeftBox[]       = {0xe2, 0x94, 0xa4, 0x00};
+		char verticalBox[] = { 0xe2, 0x94, 0x82, 0x00 };
+		char horizontalBox[] = { 0xe2, 0x94, 0x80, 0x00 };
+		char downRightBox[] = { 0xe2, 0x94, 0x8c, 0x00 };
+		char downLeftBox[] = { 0xe2, 0x94, 0x90, 0x00 };
+		char upRightBox[] = { 0xe2, 0x94, 0x94, 0x00 };
+		char upLeftBox[] = { 0xe2, 0x94, 0x98, 0x00 };
+		char downHorizontalBox[] = { 0xe2, 0x94, 0xac, 0x00 };
+		char upHorizontalBox[] = { 0xe2, 0x94, 0xb4, 0x00 };
+		char verticalHorizontalBox[] = { 0xe2, 0x94, 0xbc, 0x00 };
+		char verticalRightBox[] = { 0xe2, 0x94, 0x9c, 0x00 };
+		char verticalLeftBox[] = { 0xe2, 0x94, 0xa4, 0x00 };
 
-	    int maxLength = 0;
-	    for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++)
-	        if (game.players[i] != null) {
-	        	int length = String.valueOf( game.players[i].name ).length();
-	            if (length > maxLength)
-	                maxLength = length;
-	        }
-	    maxLength++;
+		int maxLength = 0;
+		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++)
+			if (game.players[i] != null) {
+				int length = String.valueOf(game.players[i].name).length();
+				if (length > maxLength)
+					maxLength = length;
+			}
+		maxLength++;
 
-	    if (maxLength < 4 )
-	        maxLength = 4; 
+		if (maxLength < 4)
+			maxLength = 4;
 
-	    int x = 0; 
-	    int y = 0;
-	    int line = 0;
-	    Globals.getyx(win, y, x);
+		int x = 0;
+		int y = 0;
+		int line = 0;
+		Globals.getyx(win, y, x);
 
-	    Globals.wprintw(win, "%s",downRightBox);
-	    for (int i = 1; i <= maxLength + 13; i++){
-	        if (i == maxLength + 1 || i == maxLength + 8)
-	        	Globals.wprintw(win, "%s", downHorizontalBox);
-	        else
-	        	Globals.wprintw(win, "%s", horizontalBox);
-	    }
-	    Globals.wprintw(win, "%s", downLeftBox);
-	    line++;
+		Globals.wprintw(win, "%s", downRightBox);
+		for (int i = 1; i <= maxLength + 13; i++) {
+			if (i == maxLength + 1 || i == maxLength + 8)
+				Globals.wprintw(win, "%s", downHorizontalBox);
+			else
+				Globals.wprintw(win, "%s", horizontalBox);
+		}
+		Globals.wprintw(win, "%s", downLeftBox);
+		line++;
 
-	    Globals.wmove(win, y + 1, x);
-	    Globals.wprintw(win, "%sName", verticalBox);
-	    Globals.wmove(win, y + 1, x + maxLength + 1);
-	    Globals.wprintw(win, "%sPoints", verticalBox);
-	    Globals.wmove(win, y + 1, x + maxLength + 8);
-	    Globals.wprintw(win, "%sScore%s", verticalBox, verticalBox);
-	    line++;
+		Globals.wmove(win, y + 1, x);
+		Globals.wprintw(win, "%sName", verticalBox);
+		Globals.wmove(win, y + 1, x + maxLength + 1);
+		Globals.wprintw(win, "%sPoints", verticalBox);
+		Globals.wmove(win, y + 1, x + maxLength + 8);
+		Globals.wprintw(win, "%sScore%s", verticalBox, verticalBox);
+		line++;
 
-	    Globals.wmove(win, y + line, x);
-	    Globals.wprintw(win, "%s", verticalRightBox);
-	    for (int i = 1; i <= maxLength + 13; i++)
-	        if (i == maxLength + 1 || i == maxLength + 8)
-	        	Globals.wprintw(win, "%s", verticalHorizontalBox);
-	        else
-	        	Globals.wprintw(win, "%s", horizontalBox);
-	    Globals.wprintw(win, "%s", verticalLeftBox);
-	    line++;
+		Globals.wmove(win, y + line, x);
+		Globals.wprintw(win, "%s", verticalRightBox);
+		for (int i = 1; i <= maxLength + 13; i++)
+			if (i == maxLength + 1 || i == maxLength + 8)
+				Globals.wprintw(win, "%s", verticalHorizontalBox);
+			else
+				Globals.wprintw(win, "%s", horizontalBox);
+		Globals.wprintw(win, "%s", verticalLeftBox);
+		line++;
 
-	    for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++)
-	        if(game.teams[i] != null) {
-	            int playersNumber = 0; 
-	            for (int j = 0; j < Constants.MAX_TEAM_PLAYERS; j++)
-	                if (game.teams[i].players[j] != null) {
-	                	Globals.wmove(win, y + line, x);
-	                    Globals.wprintw(win, "%s%s", verticalBox,
-	                                         game.teams[i].players[j].name);
-	                    Globals.wmove(win, y + line, x + maxLength + 1);
-	                    Globals.wprintw(win, "%s", verticalBox);
-	                    Globals.wmove(win, y + line, x + maxLength + 8);
-	                    Globals.wprintw(win, "%s", verticalBox);
-	                    Globals.wmove(win, y + line, x + maxLength + 14);
-	                    Globals.wprintw(win, "%s", verticalBox);
-	                    line++;
-	                    Globals.wmove(win, y + line, x);
-	                    Globals.wprintw(win, "%s", verticalRightBox);
-	                    for (int k = 1; k <= maxLength + 14; k++) {
-	                        if (k <= maxLength)
-	                        	Globals.wprintw(win, "%s", horizontalBox);
-	                        if (k == maxLength + 1)
-	                        	Globals.wprintw(win, "%s", verticalLeftBox);
-	                        if (k == maxLength + 8 || k == maxLength + 14) {
-	                        	Globals.wmove(win, y + line, x + k);
-	                            Globals.wprintw(win, "%s", verticalBox);
-	                        }
-	                    }
-	                    line++;
-	                    playersNumber++; 
-	                }
-	            --line;
-	            Globals.wmove(win, y + line, x + maxLength + 1);
-	            for (int k = maxLength + 1; k < maxLength + 14; k++) {
-	                if (k == maxLength + 1 || k == maxLength + 8)
-	                	Globals.wprintw(win, "%s", verticalHorizontalBox);
-	                else
-	                	Globals.wprintw(win, "%s", horizontalBox);
-	            }
-	            Globals.wprintw(win, "%s", verticalLeftBox);
-	            if (playersNumber > 0) {
-	            	Globals.wmove(win, y + line - playersNumber, x + maxLength + 2);
-	                Globals.wprintw(win, "%*d", 6, Round.round_computePoints(game.teams[i], round));
-	                Globals.wmove(win, y + line - playersNumber, x + maxLength + 9);
-	                Globals.wprintw(win, "%*d", 5, game.teams[i].score);
-	            }
-	            line++;
-	        }
+		for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++)
+			if (game.teams[i] != null) {
+				int playersNumber = 0;
+				for (int j = 0; j < Constants.MAX_TEAM_PLAYERS; j++)
+					if (game.teams[i].players[j] != null) {
+						Globals.wmove(win, y + line, x);
+						Globals.wprintw(win, "%s%s", verticalBox,
+								game.teams[i].players[j].name);
+						Globals.wmove(win, y + line, x + maxLength + 1);
+						Globals.wprintw(win, "%s", verticalBox);
+						Globals.wmove(win, y + line, x + maxLength + 8);
+						Globals.wprintw(win, "%s", verticalBox);
+						Globals.wmove(win, y + line, x + maxLength + 14);
+						Globals.wprintw(win, "%s", verticalBox);
+						line++;
+						Globals.wmove(win, y + line, x);
+						Globals.wprintw(win, "%s", verticalRightBox);
+						for (int k = 1; k <= maxLength + 14; k++) {
+							if (k <= maxLength)
+								Globals.wprintw(win, "%s", horizontalBox);
+							if (k == maxLength + 1)
+								Globals.wprintw(win, "%s", verticalLeftBox);
+							if (k == maxLength + 8 || k == maxLength + 14) {
+								Globals.wmove(win, y + line, x + k);
+								Globals.wprintw(win, "%s", verticalBox);
+							}
+						}
+						line++;
+						playersNumber++;
+					}
+				--line;
+				Globals.wmove(win, y + line, x + maxLength + 1);
+				for (int k = maxLength + 1; k < maxLength + 14; k++) {
+					if (k == maxLength + 1 || k == maxLength + 8)
+						Globals.wprintw(win, "%s", verticalHorizontalBox);
+					else
+						Globals.wprintw(win, "%s", horizontalBox);
+				}
+				Globals.wprintw(win, "%s", verticalLeftBox);
+				if (playersNumber > 0) {
+					Globals.wmove(win, y + line - playersNumber, x + maxLength
+							+ 2);
+					Globals.wprintw(win, "%*d", 6,
+							Round.round_computePoints(game.teams[i], round));
+					Globals.wmove(win, y + line - playersNumber, x + maxLength
+							+ 9);
+					Globals.wprintw(win, "%*d", 5, game.teams[i].score);
+				}
+				line++;
+			}
 
-	    Globals.wmove(win, y + line - 1, x);
-	    Globals.wprintw(win, "%s", upRightBox); 
-	    for (int i = 1; i <= maxLength + 13; i++) {
-	        if (i == maxLength + 1 || i == maxLength + 8)
-	        	Globals.wprintw(win, "%s", upHorizontalBox);
-	        else
-	        	Globals.wprintw(win, "%s", horizontalBox);
-	    }
-	    Globals.wprintw(win, "%s\n", upLeftBox);
-	    Globals.wrefresh(win);
+		Globals.wmove(win, y + line - 1, x);
+		Globals.wprintw(win, "%s", upRightBox);
+		for (int i = 1; i <= maxLength + 13; i++) {
+			if (i == maxLength + 1 || i == maxLength + 8)
+				Globals.wprintw(win, "%s", upHorizontalBox);
+			else
+				Globals.wprintw(win, "%s", horizontalBox);
+		}
+		Globals.wprintw(win, "%s\n", upLeftBox);
+		Globals.wrefresh(win);
 
-	    return Errors.ERROR_CODE.NO_ERROR.getIndex();
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 
 	/**
 	 * Create empty teams
 	 * 
-	 * @param game Current game reference.
-	 * validate if the players array is initialized with the correct length
+	 * @param game
+	 *            Current game reference. validate if the players array is
+	 *            initialized with the correct length
 	 * 
 	 * @author INFM032 F___06 Milen Tsvetanov Pankov
 	 * @author INFM032 F___33 Veselka Penkova Peycheva
@@ -368,9 +376,20 @@ class Cli {
 	 */
 	void createEmptyTeams(Game game) {
 		for (int i = 0; i < Constants.MAX_GAME_PLAYERS; i++) {
-			if (game.players != null && i < game.players.length) {            // validate if the players array is initialized with the correct length
-				Team team = new Team();                                       // initialize Team object with default constructor (this should not be needed if the team_createTeam method is static
-				team = Team.team_createTeam();                                // team_createTeam() should be marked as static
+			if (game.players != null && i < game.players.length) { // validate
+																	// if the
+																	// players
+																	// array is
+																	// initialized
+																	// with the
+																	// correct
+																	// length
+				Team team = new Team(); // initialize Team object with default
+										// constructor (this should not be
+										// needed if the team_createTeam method
+										// is static
+				team = Team.team_createTeam(); // team_createTeam() should be
+												// marked as static
 				Team.team_addPlayer(team, game.players[i]);
 				Game.game_addTeam(team, game);
 			}
@@ -524,12 +543,28 @@ class Cli {
 	}
 
 	/**
+	 * Get the line size
+	 * 
+	 * @param team
+	 *            Current team
+	 * @param player
+	 *            Current player
+	 * @return lineSize
+	 * 
 	 * @author INFM042 F___25 Kalina Zhivkova Momkova
 	 * @author INFM032 F___98 Simona Ilkova Boneva
 	 * @author INFM032 F___94 Stefan Lyudmilov Urumov
 	 */
 	int getScoreDialogLineSize(final Team currentTeam) {
-		return (0);
+		int lineSize = 0;
+		int i;
+		for (i = 0; i < Constants.MAX_TEAM_PLAYERS; i++) {
+			if (currentTeam.players[i] != null) {
+				lineSize += (currentTeam.players[i].name).length();
+			}
+		}
+		lineSize += i + i - 1;
+		return lineSize;
 	}
 
 	/**

@@ -155,11 +155,13 @@ class Game {
 
 	/**
 	 * @brief Removes a team from a game.
-	 *
-	 * @param team The team to be removed.
-	 * @param game The game from where the team is to be removed.
-	 *
-	 * @return  NO_ERROR on success, error code otherwise.
+	 * 
+	 * @param team
+	 *            The team to be removed.
+	 * @param game
+	 *            The game from where the team is to be removed.
+	 * 
+	 * @return NO_ERROR on success, error code otherwise.
 	 * 
 	 * @author INFM032 F___24 Rosen Ivanov Videv
 	 * @author INFM042 F___12 Nikolay Todorov Hristov
@@ -223,10 +225,10 @@ class Game {
 	 *            The hand in which should put the card.
 	 * @param idCard
 	 *            The id of the card.
-	 *            
+	 * 
 	 * @return 1 if the player may to put the card down 0 if the player can't to
 	 *         put the card down other value on failure.
-	 *         
+	 * 
 	 * @author INFM042 F___29 Diana Ilieva Dyulgerova
 	 * @author INFM032 F___43 Stefan Mitkov Nenchev
 	 * @author INFM032 F___75 Mihail Genov Knebel
@@ -283,35 +285,38 @@ class Game {
 			int currentCard, final int searchPattern) {
 		if (player == null)
 			return Errors.ERROR_CODE.PLAYER_NULL.getIndex();
-			
+
 		if (game == null)
 			return Errors.ERROR_CODE.GAME_NULL.getIndex();
-			
+
 		if (hand == null)
 			return Errors.ERROR_CODE.HAND_NULL.getIndex();
-			
+
 		if (searchPattern != 1 && searchPattern != -1)
 			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
-			
-		if (game.numberPlayers * Constants.MAX_CARDS > Constants.DECK_SIZE &&
-			(currentCard < 0 || currentCard > Constants.DECK_SIZE / game.numberPlayers - 1))
+
+		if (game.numberPlayers * Constants.MAX_CARDS > Constants.DECK_SIZE
+				&& (currentCard < 0 || currentCard > Constants.DECK_SIZE
+						/ game.numberPlayers - 1))
 			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
-			
+
 		while (true) {
 			currentCard += searchPattern;
-			
+
 			if (currentCard < 0)
 				currentCard += Constants.MAX_CARDS;
-			
-			while (player.hand[currentCard % Constants.MAX_CARDS] == null && Math.abs(currentCard) <= 15)
+
+			while (player.hand[currentCard % Constants.MAX_CARDS] == null
+					&& Math.abs(currentCard) <= 15)
 				currentCard += searchPattern;
-			
-			if (game_checkCard(player, game, hand, currentCard % Constants.MAX_CARDS) == 1)
+
+			if (game_checkCard(player, game, hand, currentCard
+					% Constants.MAX_CARDS) == 1)
 				return currentCard % Constants.MAX_CARDS;
-			
+
 			if (Math.abs(currentCard) > 15)
 				return Errors.ERROR_CODE.NOT_FOUND.getIndex();
-			}
+		}
 	}
 
 	/**
@@ -363,10 +368,12 @@ class Game {
 
 	/**
 	 * @brief Function to update the score of teams and players after a round.
-	 *
-	 * @param game Game where to update the scores.
-	 * @param bidWinner Pointer to the player that won the bid in the last round.
-	 *
+	 * 
+	 * @param game
+	 *            Game where to update the scores.
+	 * @param bidWinner
+	 *            Pointer to the player that won the bid in the last round.
+	 * 
 	 * @return NO_ERROR or 0 on success, other value on failure.
 	 * 
 	 * @author INFM032 F___30 Kristina Ivanova Dineva
@@ -429,11 +436,40 @@ class Game {
 	}
 
 	/**
+	 * Arranges the players in a game round
+	 * @param game 
+	 * 			Current game
+	 * @param round
+	 * 			Creates a Round in the current game
+	 *		
+	 * 	@return
+	 * 		NO_ERROR or 0 on success, other values on failure (GAME_NULL, ILLEGAL_VALUE or FULL)
+	 * 
 	 * @author INFM042 F___83 Gabriel Valentinov Grigorov
 	 * @author INFM042 F___62 Viktor Georgiev Petrov
 	 * @author INFM042 F___94 Stefan Lyudmilov Urumov
 	 */
 	int game_arrangePlayersRound(Game game, final int i) {
-		return (0);
+		if (game == null) {
+			return Errors.ERROR_CODE.GAME_NULL.getIndex();
+		}
+		if (i < 0 || i >= Constants.MAX_GAME_PLAYERS) {
+			return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
+		}
+		if (game.round != null) {
+			return Errors.ERROR_CODE.FULL.getIndex();
+		}
+
+		Round round = Round.round_createRound();
+		for (int j = i; j < i + Constants.MAX_GAME_PLAYERS; j++) {
+			if (game.players[j % Constants.MAX_GAME_PLAYERS] != null) {
+				round.round_addPlayer(game.players[j
+						% Constants.MAX_GAME_PLAYERS], round);
+			}
+		}
+
+		game.round = round;
+
+		return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
 }
