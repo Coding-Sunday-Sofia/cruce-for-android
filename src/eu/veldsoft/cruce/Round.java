@@ -12,7 +12,7 @@ class Round {
 	 * @author INFM042 F___98 Simona Ilkova Boneva
 	 * @author INFM042 F___77 Yosif Rumenov Enev
 	 */
-	Round round_createRound() {
+	static Round round_createRound() {
 		Round round = new Round();
 
 		if (round == null)
