@@ -190,13 +190,38 @@ class Game {
 	}
 
 	/**
+	 * @param game
 	 * @author INFM042 F___21 Mariya Asenova Shindarova
 	 * @author INFM032 F___83 Gabriel Valentinov Grigorov
 	 * @author INFM042 F___24 Rosen Ivanov Videv
 	 */
 	Team game_winningTeam(Game game) {
-		return (null);
+		if (game == null)
+	        return null;
+
+	    int checkTeams = 0;
+	    for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++) {
+	        if (game.teams[i] != null) {
+	            if (game.teams[i].score >= game.pointsNumber)
+	                checkTeams++;
+	        }
+	    }
+
+	    if (checkTeams == 0)
+	        return null;
+	    else if (checkTeams == 1) {
+	        for (int i = 0; i < Constants.MAX_GAME_TEAMS; i++)
+	            if (game.teams[i] != null && 
+	                game.teams[i].score >= game.pointsNumber)
+	                return game.teams[i];
+	    } else {
+	        game.pointsNumber += 10;
+	        return null;
+	    }
+
+	    return null;
 	}
+	
 
 	/**
 	 * @author INFM042 F___32 Boris Stefanov Karastanev
