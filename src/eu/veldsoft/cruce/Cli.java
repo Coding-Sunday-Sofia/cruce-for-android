@@ -481,8 +481,29 @@ class Cli {
 	 * @author INFM032 F___21 Mariya Asenova Shindarova
 	 */
 	int printBids(int selected, Round round, WINDOW win) {
-		return (0);
+		if (selected > 6 || selected < 0)
+	        return Errors.ERROR_CODE.ILLEGAL_VALUE.getIndex();
+	    if (round == null)
+	        return Errors.ERROR_CODE.ROUND_NULL.getIndex();
+
+	    for (int i = 0; i <= 6; i++)
+	        if (i == selected) {
+	            //Globals.wattron(win, COLOR_PAIR(3)); 
+	            Globals.wprintw(win, "%d ", i);
+	            //wattroff(win, COLOR_PAIR(3));
+	        }
+	        else if (i > Round.round_getMaximumBid(round) || i == 0)
+	                Globals.wprintw(win, "%d ", i);
+	             else {
+	                // wattron(win, COLOR_PAIR(1));
+	                 Globals.wprintw(win, "%d ", i);
+	                // wattroff(win, COLOR_PAIR(1));
+	             }
+
+	    return Errors.ERROR_CODE.NO_ERROR.getIndex();
 	}
+
+	
 
 	/**
 	 * @author INFM042 F___79 Viktor Georgiev Chanev

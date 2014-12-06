@@ -47,4 +47,9 @@ public class Globals {
 	public static void wprintw(WINDOW win, String string, char[] verticalBox, char[] verticalBox2) {	
 	}
 
+	public static void wprintw(WINDOW win, String string, int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
