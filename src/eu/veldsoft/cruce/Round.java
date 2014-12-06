@@ -273,7 +273,7 @@ class Round {
 
 	/**
 	 */
-	int round_getMaximumBid(Round round) {
+	static int round_getMaximumBid(Round round) {
 		return (0);
 	}
 
